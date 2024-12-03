@@ -18,7 +18,7 @@ class ProfileController extends Controller
     {
         $request->validate([
             'name' => ['required', 'max:100'],
-            'email' => ['required', 'email', 'unique:users,email,' . Auth::id()],
+            'email' => ['required', 'email', 'unique:users,email,' . Auth::user()->id],
             'image' => ['image', 'max:5120'],
         ]);
 
@@ -42,7 +42,7 @@ class ProfileController extends Controller
         $user->email = $request->email;
         $user->save();
 
-        toastr()->success('Profile Updated successfully!');
+        flash()->success('Profile Updated successfully!');
 
         return redirect()->back();
     }
@@ -62,7 +62,7 @@ class ProfileController extends Controller
 
         ]);
 
-        toastr()->success('Password Updated successfully!');
+        flash()->success('Password Updated successfully!');
 
         return redirect()->back();
     }
