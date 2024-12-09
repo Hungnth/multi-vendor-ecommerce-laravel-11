@@ -5,7 +5,7 @@
 
     <section class="section">
         <div class="section-header">
-            <h1>Slider</h1>
+            <h1>Brand</h1>
         </div>
 
         <div class="section-body">
@@ -14,42 +14,31 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Create Slider</h4>
+                            <h4>Create Brand</h4>
 
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('admin.slider.store') }}" method="POST"
+                            <form action="{{ route('admin.brand.store') }}" method="POST"
                                   enctype="multipart/form-data">
                                 @csrf
 
                                 <div class="form-group">
-                                    <label>Banner</label>
-                                    <input type="file" class="form-control" name="banner">
+                                    <label>Logo</label>
+                                    <input type="file" class="form-control" name="logo">
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Type</label>
-                                    <input type="text" class="form-control" name="type" value="{{ old('type') }}">
+                                    <label>Name</label>
+                                    <input type="text" class="form-control" name="name" value="">
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Title</label>
-                                    <input type="text" class="form-control" name="title" value="{{ old('title') }}">
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Starting price</label>
-                                    <input type="text" class="form-control" name="starting_price" value="{{ old('starting_price') }}">
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Button URL</label>
-                                    <input type="text" class="form-control" name="btn_url" value="{{ old('btn_url') }}">
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Serial</label>
-                                    <input type="text" class="form-control" name="serial" value="{{ old('serial') }}">
+                                    <label for="inputState">Is Featured</label>
+                                    <select id="inputState" class="form-control" name="is_featured">
+                                        <option value="">Select</option>
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
                                 </div>
 
                                 <div class="form-group">
@@ -59,6 +48,7 @@
                                         <option value="0">Inactive</option>
                                     </select>
                                 </div>
+
 
                                 <button type="submit" class="btn btn-primary">Create</button>
                             </form>

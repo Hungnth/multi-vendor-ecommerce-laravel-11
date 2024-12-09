@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\DataTables\CategoryDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Str;
 
@@ -95,6 +96,11 @@ class CategoryController extends Controller
     public function destroy(string $id)
     {
         $category = Category::findOrFail($id);
+        $sub_category = SubCategory::where('category_id', $category->id)->count();
+        if ($sub_category > 0) {
+            return response(['status' => 'error', 'message' => 'This items contains sub items for delete this you have to delete the sub items first!']);
+        }
+
         $category->delete();;
 
         return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
@@ -106,6 +112,6 @@ class CategoryController extends Controller
         $category->status = $request->status == 'true' ? 1 : 0;
         $category->save();
 
-        return response(['message' => 'Status Changed Successfully!']);
+        return response(['status' => 'success', 'message' => 'Status Changed Successfully!']);
     }
 }
