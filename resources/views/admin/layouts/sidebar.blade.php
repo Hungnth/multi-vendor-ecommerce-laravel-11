@@ -33,9 +33,20 @@
                 'admin.brand.*'
             ]) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
-                    <span>Manage Product</span></a>
+                    <span>Manage Products</span></a>
                 <ul class="dropdown-menu">
-                    <li class="{{ set_active(['admin.brand.*']) }}"><a class="nav-link" href="{{ route('admin.brand.index') }}">Brand</a></li>
+                    <li class="{{ set_active(['admin.brand.*']) }}"><a class="nav-link" href="{{ route('admin.brand.index') }}">Brands</a></li>
+                    <li class="{{ set_active(['admin.brand.*']) }}"><a class="nav-link" href="{{ route('admin.brand.index') }}">Products</a></li>
+                </ul>
+            </li>
+
+            <li class="dropdown {{ set_active([
+                'admin.vendor-profile.*',
+            ]) }}">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
+                    <span>Ecommerce</span></a>
+                <ul class="dropdown-menu">
+                    <li class="{{ set_active(['admin.vendor-profile.*']) }}"><a class="nav-link" href="{{ route('admin.vendor-profile.index') }}">Vendor Profile</a></li>
                 </ul>
             </li>
 
@@ -48,6 +59,8 @@
                     <li class="{{ set_active(['admin.slider.*']) }}"><a class="nav-link" href="{{ route('admin.slider.index') }}">Slider</a></li>
                 </ul>
             </li>
+
+
 
 
 
