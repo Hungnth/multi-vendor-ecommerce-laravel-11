@@ -30,13 +30,14 @@
             </li>
 
             <li class="dropdown {{ set_active([
-                'admin.brand.*'
+                'admin.brand.*',
+                'admin.products.*',
             ]) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
                     <span>Manage Products</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ set_active(['admin.brand.*']) }}"><a class="nav-link" href="{{ route('admin.brand.index') }}">Brands</a></li>
-                    <li class="{{ set_active(['admin.brand.*']) }}"><a class="nav-link" href="{{ route('admin.brand.index') }}">Products</a></li>
+                    <li class="{{ set_active(['admin.products.*']) }}"><a class="nav-link" href="{{ route('admin.products.index') }}">Products</a></li>
                 </ul>
             </li>
 
