@@ -9,6 +9,9 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\ChildCategory;
 use App\Models\Product;
+use App\Models\ProductImageGallery;
+use App\Models\ProductVariant;
+use App\Models\ProductVariantItem;
 use App\Models\SubCategory;
 use App\Traits\ImageUploadTrait;
 use Illuminate\Http\Request;
@@ -156,7 +159,38 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+
+        // Delete the product thumb image
+        $this->delete_image($product->thumb_image);
+
+        // Delete product images
+        $gallery_images = ProductImageGallery::where('product_id', $product->id)->get();
+        foreach ($gallery_images as $gallery_image) {
+            $this->delete_image($gallery_image->image);
+            $gallery_image->delete();
+        }
+
+        // Delete product variants if exist
+        $variants = ProductVariant::where('product_id', $product->id)->get();
+
+        foreach ($variants as $variant) {
+            $variant->product_variant_items()->delete();
+            $variant->delete();
+        }
+
+        $product->delete();
+
+        return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
+    }
+
+    public function change_status(Request $request)
+    {
+        $product = Product::findOrFail($request->id);
+        $product->status = $request->status == 'true' ? 1 : 0;
+        $product->save();
+
+        return response(['status' => 'success', 'message' => 'Status Changed Successfully!']);
     }
 
     /**
