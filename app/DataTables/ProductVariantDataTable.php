@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\ProductImageGallery;
+use App\Models\ProductVariant;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -12,7 +12,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class ProductImageGalleryDataTable extends DataTable
+class ProductVariantDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -23,28 +23,31 @@ class ProductImageGalleryDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($query) {
-                $delete_btn = '<a href="' . route("admin.products-image-gallery.destroy", $query->id) . '" class="btn btn-danger mr-1 delete-item"><i class="fas fa-trash"></i></a>';
-                return $delete_btn;
-            })
-            ->addColumn('image', function ($query) {
-                // dd($query->id);
+                $variant_item = '<a href="' . route("admin.products.edit", $query->id) . '" class="btn btn-info mr-2"><i class="fas fa-edit"></i> Variant Items</a>';
+                $manage_option = '<a href="' . route("admin.products.edit", $query->id) . '" class="btn btn-info mr-2"><i class="fas fa-edit"></i> Variant Items</a>';
+                $edit_btn = '<a href="' . route("admin.products-variant.edit", $query->id) . '" class="btn btn-primary mr-2"><i class="fas fa-edit"></i></a>';
+                $delete_btn = '<a href="' . route("admin.products-variant.destroy", $query->id) . '" class="btn btn-danger mr-1 delete-item"><i class="fas fa-trash"></i></a>';
 
-                return "<img src='" . asset($query->image) . "' alt='' style='width: 200px;'>";
+                return $variant_item . $edit_btn . $delete_btn;
             })
-            ->rawColumns(['action', 'image'])
+            ->addColumn('status', function ($query) {
+                $checked = $query->status == 1 ? 'checked' : '';
+
+                return '<label class="custom-switch mt-2">
+                        <input type="checkbox" ' . $checked . ' name="custom-switch-checkbox" data-id="' . $query->id . '" class="custom-switch-input change-status">
+                        <span class="custom-switch-indicator"></span>
+                      </label>';
+            })
+            ->rawColumns(['action', 'status'])
             ->setRowId('id');
     }
 
     /**
      * Get the query source of dataTable.
      */
-    public function query(ProductImageGallery $model): QueryBuilder
+    public function query(ProductVariant $model): QueryBuilder
     {
-        // return $model->newQuery();
-        $product_id = request()->get('product');
-        return $model->newQuery()
-            ->where('product_id', $product_id)
-            ->select('id', 'image');
+        return $model->newQuery();
     }
 
     /**
@@ -53,7 +56,7 @@ class ProductImageGalleryDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('productimagegallery-table')
+            ->setTableId('productvariant-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             //->dom('Bfrtip')
@@ -76,11 +79,12 @@ class ProductImageGalleryDataTable extends DataTable
     {
         return [
             Column::make('id')->width(100)->addClass('text-left'),
-            Column::make('image'),
+            Column::make('name'),
+            Column::make('status')->width(150),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
-                ->width(250)
+                ->width(300)
                 ->addClass('text-center'),
         ];
     }
@@ -90,6 +94,6 @@ class ProductImageGalleryDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'ProductImageGallery_' . date('YmdHis');
+        return 'ProductVariant_' . date('YmdHis');
     }
 }

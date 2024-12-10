@@ -7,6 +7,9 @@
         <div class="section-header">
             <h1>Product Image Gallery</h1>
         </div>
+        <div class="mb-3">
+            <a href="{{ route('admin.products.index') }}" class="btn btn-primary">Back</a>
+        </div>
 
         <div class="section-body">
 
@@ -17,7 +20,8 @@
                             <h4>Product: {{ $product->name }}</h4>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('admin.products-image-gallery.store') }}" method="post" enctype="multipart/form-data">
+                            <form action="{{ route('admin.products-image-gallery.store') }}" method="post"
+                                  enctype="multipart/form-data">
                                 @csrf
 
                                 <div class="form-group">
