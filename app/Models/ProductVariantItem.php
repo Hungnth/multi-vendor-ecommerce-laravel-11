@@ -5,9 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductVariant extends Model
+class ProductVariantItem extends Model
 {
     use HasFactory;
 
-
+    public function product_variant()
+    {
+        return $this->belongsTo(ProductVariant::class);
+    }
 }
