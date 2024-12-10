@@ -32,6 +32,7 @@
             <li class="dropdown {{ set_active([
                 'admin.brand.*',
                 'admin.products.*',
+                'admin.products-image-gallery.*',
             ]) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
                     <span>Manage Products</span></a>
