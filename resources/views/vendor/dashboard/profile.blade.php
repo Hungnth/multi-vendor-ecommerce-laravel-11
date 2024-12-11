@@ -1,4 +1,4 @@
-@extends('vendor.dashboard.layouts.master')
+@extends('vendor.layouts.master')
 
 @section('content')
     <!--=============================
@@ -6,7 +6,7 @@
   ==============================-->
     <section id="wsus__dashboard">
         <div class="container-fluid">
-            @include('vendor.dashboard.layouts.sidebar')
+            @include('vendor.layouts.sidebar')
 
             <div class="row">
                 <div class="col-xl-9 col-xxl-10 col-lg-9 ms-auto">
@@ -25,9 +25,9 @@
 
                                             <div class="wsus__dash_pro_img">
                                                 <img
-                                                    src="{{ Auth::user()->image ? asset(Auth::user()->image) : asset('frontend/images/avatar.png') }}"
-                                                    alt="img"
-                                                    class="img-fluid w-100">
+                                                        src="{{ Auth::user()->image ? asset(Auth::user()->image) : asset('frontend/images/avatar.png') }}"
+                                                        alt="img"
+                                                        class="img-fluid w-100">
                                                 <input name="image" type="file">
                                             </div>
                                         </div>

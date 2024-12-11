@@ -22,6 +22,8 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/jquery.classycountdown.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/venobox.min.css') }}">
 
+    @stack('css')
+
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/responsive.css') }}">
     <!-- <link rel="stylesheet" href="css/rtl.css"> -->
@@ -101,6 +103,8 @@
 
 <!--main/custom js-->
 <script src="{{ asset('frontend/js/main.js') }}"></script>
+
+@stack('scripts')
 </body>
 
 </html>

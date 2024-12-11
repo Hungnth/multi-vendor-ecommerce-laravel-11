@@ -15,7 +15,6 @@
                     <div class="card">
                         <div class="card-header">
                             <h4>Update Vendor Profile</h4>
-
                         </div>
                         <div class="card-body">
                             <form action="{{ route('admin.vendor-profile.store') }}" method="POST"
@@ -31,6 +30,11 @@
                                 <div class="form-group">
                                     <label>Banner</label>
                                     <input type="file" class="form-control" name="banner">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Shop Name</label>
+                                    <input type="text" class="form-control" name="shop_name" value="{{ $profile->shop_name }}">
                                 </div>
 
                                 <div class="form-group">
