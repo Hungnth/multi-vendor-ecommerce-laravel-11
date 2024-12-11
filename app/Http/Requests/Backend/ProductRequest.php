@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Backend;
 
+use App\Models\Product;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class ProductRequest extends FormRequest
 {

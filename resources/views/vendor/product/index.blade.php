@@ -32,7 +32,6 @@
     {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
 
 
-
     <script>
         $(document).ready(function () {
             $('body').on('click', '.change-status', function () {

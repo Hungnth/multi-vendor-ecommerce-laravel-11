@@ -87,15 +87,66 @@ class VendorProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+
+        // Check owner
+        if($product->vendor_id != Auth::user()->vendor->id){
+            abort(404);
+        }
+
+        $sub_categories = SubCategory::where('category_id', $product->category_id)->get();
+        $child_categories = ChildCategory::where('sub_category_id', $product->sub_category_id)->get();
+        $categories = Category::all();
+        $brands = Brand::all();
+        return view('vendor.product.edit', compact(
+            'product',
+            'categories',
+            'sub_categories',
+            'child_categories',
+            'brands',
+        ));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ProductRequest $request, string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+
+        if($product->vendor_id != Auth::user()->vendor->id){
+            abort(404);
+        }
+
+        $image_path = $this->update_image($request, 'image', 'uploads', $product->thumb_image);
+
+        $product->thumb_image = $image_path ?? $product->thumb_image;
+        $product->name = $request->name;
+        $product->slug = Str::slug($request->name);
+        $product->vendor_id = Auth::user()->vendor->id;
+        $product->category_id = $request->category;
+        $product->sub_category_id = $request->sub_category;
+        $product->child_category_id = $request->child_category;
+        $product->brand_id = $request->brand;
+        $product->qty = $request->qty;
+        $product->short_description = $request->short_description;
+        $product->long_description = $request->long_description;
+        $product->video_link = $request->video_link;
+        $product->sku = $request->sku;
+        $product->price = $request->price;
+        $product->offer_price = $request->offer_price;
+        $product->offer_start_date = $request->offer_start_date;
+        $product->offer_end_date = $request->offer_end_date;
+        $product->product_type = $request->product_type;
+        $product->status = $request->status;
+        $product->is_approved = $product->is_approved;
+        $product->seo_title = $request->seo_title;
+        $product->seo_description = $request->seo_description;
+        $product->save();
+
+        flash()->flash('success', 'Updated Successfully!', [], 'Product');
+
+        return redirect()->route('vendor.products.index');
     }
 
     /**
