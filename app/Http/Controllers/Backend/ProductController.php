@@ -46,7 +46,6 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        // // dd(Auth::user()->vendor);
         // $request->validate([
         //     'image' => ['required', 'image', 'max:5120'],
         //     'name' => ['required', 'string', 'max:200'],

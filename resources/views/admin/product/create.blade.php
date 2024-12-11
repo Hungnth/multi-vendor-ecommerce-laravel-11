@@ -1,4 +1,5 @@
 @extends('admin.layouts.master')
+
 @push('css')
     <link rel="stylesheet" href="{{ asset('backend/assets/modules/bootstrap-daterangepicker/daterangepicker.css') }}">
 @endpush
