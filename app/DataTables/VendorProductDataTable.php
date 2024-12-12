@@ -57,7 +57,14 @@ class VendorProductDataTable extends DataTable
                             <input ' . $checked . ' class="form-check-input change-status" type="checkbox" id="change_status" data-id="' . $query->id . '">
                         </div>';
             })
-            ->rawColumns(['action', 'image', 'type', 'status'])
+            ->addColumn('approved', function ($query) {
+                if ($query->is_approved == 1) {
+                    return '<i class="badge bg-success p-2">Approved</i>';
+                } else {
+                    return '<i class="badge bg-warning p-2">Pending</i>';
+                }
+            })
+            ->rawColumns(['action', 'image', 'type', 'status', 'approved'])
             ->setRowId('id');
     }
 
@@ -99,10 +106,11 @@ class VendorProductDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('id')->width(100)->addClass('text-left'),
+            Column::make('id')->width(100)->addClass('text-start'),
             Column::make('image'),
             Column::make('name'),
             Column::make('price'),
+            Column::make('approved'),
             Column::make('type')->width(200),
             Column::make('status')->width(150),
             Column::computed('action')

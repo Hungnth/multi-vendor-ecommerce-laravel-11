@@ -16,7 +16,8 @@
                         <h3><i class="fas fa-box"></i> Product Variant</h3>
                         <h6>Product: {{ $product->name }}</h6>
                         <div class="create_btn">
-                            <a href="{{ route('vendor.products-variant.create', ['product' => $product->id]) }}" class="btn btn-primary"><i class="fas fa-plus"></i> Create Variant</a>
+                            <a href="{{ route('vendor.products-variant.create', ['product' => $product->id]) }}"
+                               class="btn btn-primary"><i class="fas fa-plus"></i> Create Variant</a>
                         </div>
                         <div class="wsus__dashboard_profile">
                             <div class="wsus__dash_pro_area">

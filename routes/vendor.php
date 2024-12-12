@@ -20,6 +20,7 @@ Route::resource('shop-profile', VendorShopProfileController::class);
 // Vendor Product routes
 Route::get('product/get-sub-categories', [VendorProductController::class, 'get_sub_categories'])->name('product.get-sub-categories');
 Route::get('product/get-child-categories', [VendorProductController::class, 'get_child_categories'])->name('product.get-child-categories');
+Route::put('product/change-status', [VendorProductController::class, 'change_status'])->name('product.change-status');
 Route::resource('products', VendorProductController::class);
 
 // Vendor Product Image Gallery route
