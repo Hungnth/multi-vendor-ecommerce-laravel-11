@@ -125,6 +125,18 @@
 <!--main/custom js-->
 <script src="{{ asset('frontend/js/main.js') }}"></script>
 
+{{-- Error notification --}}
+<script>
+
+    @if($errors->any())
+    @foreach($errors->all() as $error)
+
+    flasher.error("{{ $error }}");
+
+    @endforeach
+    @endif
+</script>
+
 {{-- Dynamic delete alert --}}
 <script>
     $(document).ready(function () {

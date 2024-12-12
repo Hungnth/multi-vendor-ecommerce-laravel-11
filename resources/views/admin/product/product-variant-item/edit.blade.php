@@ -41,16 +41,16 @@
                                     <label for="inputState">Is Default</label>
                                     <select id="inputState" class="form-control" name="is_default">
                                         <option value="">Select</option>
-                                        <option {{ $variant_item->is_default = 1 ? 'selected' : '' }} value="1">Yes</option>
-                                        <option {{ $variant_item->is_default = 0 ? 'selected' : '' }} value="0">No</option>
+                                        <option {{ $variant_item->is_default == 1 ? 'selected' : '' }} value="1">Yes</option>
+                                        <option {{ $variant_item->is_default == 0 ? 'selected' : '' }} value="0">No</option>
                                     </select>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="inputState">Status</label>
                                     <select id="inputState" class="form-control" name="status">
-                                        <option {{ $variant_item->status = 1 ? 'selected' : '' }} value="1">Active</option>
-                                        <option {{ $variant_item->status = 0 ? 'selected' : '' }} value="0">Inactive</option>
+                                        <option {{ $variant_item->status == 1 ? 'selected' : '' }} value="1">Active</option>
+                                        <option {{ $variant_item->status == 0 ? 'selected' : '' }} value="0">Inactive</option>
                                     </select>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Update</button>

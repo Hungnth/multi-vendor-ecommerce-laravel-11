@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\DataTables\ProductVariantDataTable;
+use App\DataTables\VendorProductVariantDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\ProductVariantItem;
 use Illuminate\Http\Request;
 
-class ProductVariantController extends Controller
+class VendorProductVariantController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, ProductVariantDataTable $dataTable)
+    public function index(Request $request, VendorProductVariantDataTable $dataTable)
     {
-        $product = Product::findOrFail($request->product);
-        return $dataTable->render('admin.product.product-variant.index', compact('product'));
+        $product = Product::findOrFail($request->product); // Get ID (?product=id) from slug (URL)
+        return $dataTable->render('vendor.product.product-variant.index', compact('product'));
     }
 
     /**
@@ -25,7 +25,7 @@ class ProductVariantController extends Controller
      */
     public function create()
     {
-        return view('admin.product.product-variant.create');
+        return view('vendor.product.product-variant.create');
     }
 
     /**
@@ -47,7 +47,7 @@ class ProductVariantController extends Controller
 
         flash()->flash('success', 'Created Successfully!', [], 'Product Variant');
 
-        return redirect()->route('admin.products-variant.index', ['product' => $request->product]);
+        return redirect()->route('vendor.products-variant.index', ['product' => $request->product]);
     }
 
     /**
@@ -64,7 +64,7 @@ class ProductVariantController extends Controller
     public function edit(string $id)
     {
         $variant = ProductVariant::findOrFail($id);
-        return view('admin.product.product-variant.edit', compact('variant'));
+        return view('vendor.product.product-variant.edit', compact('variant'));
     }
 
     /**
@@ -84,7 +84,7 @@ class ProductVariantController extends Controller
 
         flash()->flash('success', 'Updated Successfully!', [], 'Product Variant');
 
-        return redirect()->route('admin.products-variant.index', ['product' => $variant->product_id]);
+        return redirect()->route('vendor.products-variant.index', ['product' => $variant->product_id]);
     }
 
     /**
@@ -104,6 +104,9 @@ class ProductVariantController extends Controller
         return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
     }
 
+    /**
+     * Change Variant status
+     */
     public function change_status(Request $request)
     {
         $variant = ProductVariant::findOrFail($request->id);
