@@ -70,13 +70,19 @@
 
             <li class="dropdown {{ set_active([
                 'admin.vendor-profile.*',
+                'admin.flash-sale.*',
             ]) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
                     <span>Ecommerce</span></a>
                 <ul class="dropdown-menu">
+                    <li class="{{ set_active(['admin.flash-sale.*']) }}">
+                        <a class="nav-link" href="{{ route('admin.flash-sale.index') }}">Flash Sale</a>
+                    </li>
+
                     <li class="{{ set_active(['admin.vendor-profile.*']) }}">
                         <a class="nav-link" href="{{ route('admin.vendor-profile.index') }}">Vendor Profile</a>
                     </li>
+
                 </ul>
             </li>
 

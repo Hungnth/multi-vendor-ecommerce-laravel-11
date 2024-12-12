@@ -13,4 +13,14 @@ class Product extends Model
     {
         return $this->belongsTo(Vendor::class);
     }
+
+    public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function product_image_gallery(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ProductImageGallery::class);
+    }
 }
