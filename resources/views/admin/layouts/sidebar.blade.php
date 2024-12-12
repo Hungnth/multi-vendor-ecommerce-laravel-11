@@ -23,21 +23,48 @@
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
                     <span>Manage Categorise</span></a>
                 <ul class="dropdown-menu">
-                    <li class="{{ set_active(['admin.category.*']) }}"><a class="nav-link" href="{{ route('admin.category.index') }}">Category</a></li>
-                    <li class="{{ set_active(['admin.sub-category.*']) }}"><a class="nav-link" href="{{ route('admin.sub-category.index') }}">Sub Category</a></li>
-                    <li class="{{ set_active(['admin.child-category.*']) }}"><a class="nav-link" href="{{ route('admin.child-category.index') }}">Child Category</a></li>
+                    <li class="{{ set_active(['admin.category.*']) }}">
+                        <a class="nav-link" href="{{ route('admin.category.index') }}">Category</a>
+                    </li>
+                    <li class="{{ set_active(['admin.sub-category.*']) }}">
+                        <a class="nav-link" href="{{ route('admin.sub-category.index') }}">Sub Category</a>
+                    </li>
+                    <li class="{{ set_active(['admin.child-category.*']) }}">
+                        <a class="nav-link" href="{{ route('admin.child-category.index') }}">Child Category</a>
+                    </li>
                 </ul>
             </li>
 
             <li class="dropdown {{ set_active([
                 'admin.brand.*',
                 'admin.products.*',
+                'admin.seller-products.*',
+                'admin.seller-pending-products.*',
+                'admin.products-image-gallery.*',
+                'admin.products-variant.*',
+                'admin.products-variant-item.*',
             ]) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
                     <span>Manage Products</span></a>
                 <ul class="dropdown-menu">
-                    <li class="{{ set_active(['admin.brand.*']) }}"><a class="nav-link" href="{{ route('admin.brand.index') }}">Brands</a></li>
-                    <li class="{{ set_active(['admin.products.*']) }}"><a class="nav-link" href="{{ route('admin.products.index') }}">Products</a></li>
+                    <li class="{{ set_active(['admin.brand.*']) }}">
+                        <a class="nav-link" href="{{ route('admin.brand.index') }}">Brands</a>
+                    </li>
+                    <li class="{{ set_active([
+                    'admin.products.*',
+                    'admin.products-image-gallery.*',
+                    'admin.products-variant.*',
+                    'admin.products-variant-item.*',
+                    ]) }}">
+                        <a class="nav-link" href="{{ route('admin.products.index') }}">Products</a>
+                    </li>
+                    <li class="{{ set_active(['admin.seller-products.*']) }}">
+                        <a class="nav-link" href="{{ route('admin.seller-products.index') }}">Seller Products</a>
+                    </li>
+                    <li class="{{ set_active(['admin.seller-pending-products.*']) }}">
+                        <a class="nav-link" href="{{ route('admin.seller-pending-products.index') }}">Seller Pending
+                            Products</a>
+                    </li>
                 </ul>
             </li>
 
@@ -47,7 +74,9 @@
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
                     <span>Ecommerce</span></a>
                 <ul class="dropdown-menu">
-                    <li class="{{ set_active(['admin.vendor-profile.*']) }}"><a class="nav-link" href="{{ route('admin.vendor-profile.index') }}">Vendor Profile</a></li>
+                    <li class="{{ set_active(['admin.vendor-profile.*']) }}">
+                        <a class="nav-link" href="{{ route('admin.vendor-profile.index') }}">Vendor Profile</a>
+                    </li>
                 </ul>
             </li>
 
@@ -57,20 +86,11 @@
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
                     <span>Manage Website</span></a>
                 <ul class="dropdown-menu">
-                    <li class="{{ set_active(['admin.slider.*']) }}"><a class="nav-link" href="{{ route('admin.slider.index') }}">Slider</a></li>
+                    <li class="{{ set_active(['admin.slider.*']) }}">
+                        <a class="nav-link" href="{{ route('admin.slider.index') }}">Slider</a>
+                    </li>
                 </ul>
             </li>
-
-
-
-
-
-
-
-
-
-
-
 
 
             {{--<li class="dropdown">
@@ -88,15 +108,6 @@
             {{--</li>--}}
 
         </ul>
-
-
-
-
-
-
-
-
-
 
 
         {{-- <div class="mt-4 mb-4 p-3 hide-sidebar-mini">

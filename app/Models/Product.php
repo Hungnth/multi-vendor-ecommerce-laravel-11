@@ -9,4 +9,8 @@ class Product extends Model
 {
     use HasFactory;
 
+    public function vendor(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Vendor::class);
+    }
 }

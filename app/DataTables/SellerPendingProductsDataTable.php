@@ -4,7 +4,6 @@ namespace App\DataTables;
 
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
-use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -13,7 +12,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class ProductDataTable extends DataTable
+class SellerPendingProductsDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -58,7 +57,16 @@ class ProductDataTable extends DataTable
                         <span class="custom-switch-indicator"></span>
                       </label>';
             })
-            ->rawColumns(['action', 'image', 'type', 'status'])
+            ->addColumn('vendor', function ($query) {
+                return $query->vendor->shop_name;
+            })
+            ->addColumn('approved', function ($query) {
+                return '<select class="form-control is_approved" data-id="' . $query->id . '">
+                            <option value="0">Pending</option>
+                            <option value="1">Approved</option>
+                        </select>';
+            })
+            ->rawColumns(['action', 'image', 'type', 'status', 'vendor', 'approved'])
             ->setRowId('id');
     }
 
@@ -68,7 +76,7 @@ class ProductDataTable extends DataTable
     public function query(Product $model): QueryBuilder
     {
         return $model
-            ->where('vendor_id', Auth::user()->vendor->id)
+            ->where('is_approved', 0)
             ->newQuery();
     }
 
@@ -78,20 +86,20 @@ class ProductDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('product-table')
-            ->columns($this->getColumns())
-            ->minifiedAjax()
-            //->dom('Bfrtip')
-            ->orderBy(0)
-            ->selectStyleSingle()
-            ->buttons([
-                // Button::make('excel'),
-                // Button::make('csv'),
-                // Button::make('pdf'),
-                // Button::make('print'),
-                // Button::make('reset'),
-                // Button::make('reload')
-            ]);
+                    ->setTableId('sellerpendingproducts-table')
+                    ->columns($this->getColumns())
+                    ->minifiedAjax()
+                    //->dom('Bfrtip')
+                    ->orderBy(0)
+                    ->selectStyleSingle()
+                    ->buttons([
+                        Button::make('excel'),
+                        Button::make('csv'),
+                        Button::make('pdf'),
+                        Button::make('print'),
+                        Button::make('reset'),
+                        Button::make('reload')
+                    ]);
     }
 
     /**
@@ -101,11 +109,13 @@ class ProductDataTable extends DataTable
     {
         return [
             Column::make('id')->width(100)->addClass('text-left'),
+            Column::make('vendor'),
             Column::make('image'),
             Column::make('name'),
-            Column::make('price'),
+            Column::make('price')->addClass('text-left'),
             Column::make('type')->width(200),
-            Column::make('status')->width(150),
+            Column::make('status')->width(100),
+            Column::make('approved')->width(150),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
@@ -119,6 +129,6 @@ class ProductDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Product_' . date('YmdHis');
+        return 'SellerPendingProducts_' . date('YmdHis');
     }
 }

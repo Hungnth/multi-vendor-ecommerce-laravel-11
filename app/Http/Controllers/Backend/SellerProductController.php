@@ -1,0 +1,32 @@
+<?php
+
+namespace App\Http\Controllers\Backend;
+
+use App\DataTables\SellerPendingProductsDataTable;
+use App\DataTables\SellerProductsDataTable;
+use App\Http\Controllers\Controller;
+use App\Models\Product;
+use Illuminate\Http\Request;
+
+class SellerProductController extends Controller
+{
+    public function index(SellerProductsDataTable $dataTable)
+    {
+        return $dataTable->render('admin.product.seller-product.index');
+    }
+
+    public function pending_products(SellerPendingProductsDataTable $dataTable)
+    {
+        return $dataTable->render('admin.product.seller-pending-product.index');
+    }
+
+    public function change_approve_status(Request $request)
+    {
+        $product = Product::findOrFail($request->id);
+        $product->is_approved = $request->value;
+        $product->save();
+
+        return response()->json(['status' => 'success', 'message' => 'Product Approve Status has been changed.']);
+
+    }
+}
