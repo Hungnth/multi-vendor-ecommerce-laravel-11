@@ -9,11 +9,13 @@ class SubCategory extends Model
 {
     use HasFactory;
 
-    public function category() {
+    public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
         return $this->belongsTo(Category::class);
     }
 
-    public function child_categories() {
+    public function childCategories(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
         return   $this->hasMany(ChildCategory::class);
     }
 }

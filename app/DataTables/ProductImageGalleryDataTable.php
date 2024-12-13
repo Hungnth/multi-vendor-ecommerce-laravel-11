@@ -23,12 +23,9 @@ class ProductImageGalleryDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($query) {
-                $delete_btn = '<a href="' . route("admin.products-image-gallery.destroy", $query->id) . '" class="btn btn-danger delete-item"><i class="fas fa-trash"></i></a>';
-                return $delete_btn;
+                return '<a href="' . route("admin.products-image-gallery.destroy", $query->id) . '" class="btn btn-danger delete-item"><i class="fas fa-trash"></i></a>';
             })
             ->addColumn('image', function ($query) {
-                // dd($query->id);
-
                 return "<img src='" . asset($query->image) . "' alt='' style='width: 200px;'>";
             })
             ->rawColumns(['action', 'image'])
@@ -43,10 +40,6 @@ class ProductImageGalleryDataTable extends DataTable
         return $model
             ->where('product_id', request()->product)
             ->newQuery();
-        // $product_id = request()->get('product');
-        // return $model->newQuery()
-        //     ->where('product_id', $product_id)
-        //     ->select('id', 'image');
     }
 
     /**

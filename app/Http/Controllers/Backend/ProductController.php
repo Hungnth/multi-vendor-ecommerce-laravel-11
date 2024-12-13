@@ -61,11 +61,11 @@ class ProductController extends Controller
         //     'status' => ['required'],
         // ]);
 
-        $image_path = $this->upload_image($request, 'image', 'uploads');
+        $imagePath = $this->uploadImage($request, 'image', 'uploads');
 
         $product = new Product();
 
-        $product->thumb_image = $image_path;
+        $product->thumb_image = $imagePath;
         $product->name = $request->name;
         $product->slug = Str::slug($request->name);
         $product->vendor_id = Auth::user()->vendor->id;
@@ -108,11 +108,11 @@ class ProductController extends Controller
     public function edit(string $id)
     {
         $product = Product::findOrFail($id);
-        $sub_categories = SubCategory::where('category_id', $product->category_id)->get();
-        $child_categories = ChildCategory::where('sub_category_id', $product->sub_category_id)->get();
+        $subCategories = SubCategory::where('category_id', $product->category_id)->get();
+        $childCategories = ChildCategory::where('sub_category_id', $product->sub_category_id)->get();
         $categories = Category::all();
         $brands = Brand::all();
-        return view('admin.product.edit', compact('product', 'categories', 'sub_categories', 'child_categories', 'brands'));
+        return view('admin.product.edit', compact('product', 'categories', 'subCategories', 'childCategories', 'brands'));
     }
 
     /**
@@ -122,12 +122,11 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
 
-        $image_path = $this->update_image($request, 'image', 'uploads', $product->thumb_image);
+        $imagePath = $this->updateImage($request, 'image', 'uploads', $product->thumb_image);
 
-        $product->thumb_image = $image_path ?? $product->thumb_image;
+        $product->thumb_image = $imagePath ?? $product->thumb_image;
         $product->name = $request->name;
         $product->slug = Str::slug($request->name);
-        // $product->vendor_id = Auth::user()->vendor->id;
         $product->category_id = $request->category;
         $product->sub_category_id = $request->sub_category;
         $product->child_category_id = $request->child_category;
@@ -143,7 +142,6 @@ class ProductController extends Controller
         $product->offer_end_date = $request->offer_end_date;
         $product->product_type = $request->product_type;
         $product->status = $request->status;
-        // $product->is_approved = 1;
         $product->seo_title = $request->seo_title;
         $product->seo_description = $request->seo_description;
         $product->save();
@@ -161,13 +159,13 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
 
         // Delete the product thumb image
-        $this->delete_image($product->thumb_image);
+        $this->deleteImage($product->thumb_image);
 
         // Delete product images
-        $gallery_images = ProductImageGallery::where('product_id', $product->id)->get();
-        foreach ($gallery_images as $gallery_image) {
-            $this->delete_image($gallery_image->image);
-            $gallery_image->delete();
+        $galleryImages = ProductImageGallery::where('product_id', $product->id)->get();
+        foreach ($galleryImages as $galleryImage) {
+            $this->deleteImage($galleryImage->image);
+            $galleryImage->delete();
         }
 
         // Delete product variants if exist
@@ -183,7 +181,7 @@ class ProductController extends Controller
         return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
     }
 
-    public function change_status(Request $request)
+    public function changeStatus(Request $request)
     {
         $product = Product::findOrFail($request->id);
         $product->status = $request->status == 'true' ? 1 : 0;
@@ -195,20 +193,20 @@ class ProductController extends Controller
     /**
      * Get all product sub categories
      */
-    public function get_sub_categories(Request $request)
+    public function getSubCategories(Request $request)
     {
-        $sub_categories = SubCategory::where('category_id', $request->id)->get();
+        $subCategories = SubCategory::where('category_id', $request->id)->get();
 
-        return $sub_categories;
+        return $subCategories;
     }
 
     /**
      * Get all product child categories
      */
-    public function get_child_categories(Request $request)
+    public function getChildCategories(Request $request)
     {
-        $child_categories = ChildCategory::where('sub_category_id', $request->id)->get();
+        $childCategories = ChildCategory::where('sub_category_id', $request->id)->get();
 
-        return $child_categories;
+        return $childCategories;
     }
 }

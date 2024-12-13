@@ -23,9 +23,9 @@ class SellerPendingProductsDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($query) {
-                $edit_btn = '<a href="' . route("admin.products.edit", $query->id) . '" class="btn btn-primary mr-2"><i class="fas fa-edit"></i></a>';
-                $delete_btn = '<a href="' . route("admin.products.destroy", $query->id) . '" class="btn btn-danger mr-1 delete-item"><i class="fas fa-trash"></i></a>';
-                $more_btn = '<div class="dropdown dropleft d-inline">
+                $editBtn = '<a href="' . route("admin.products.edit", $query->id) . '" class="btn btn-primary mr-2"><i class="fas fa-edit"></i></a>';
+                $deleteBtn = '<a href="' . route("admin.products.destroy", $query->id) . '" class="btn btn-danger mr-1 delete-item"><i class="fas fa-trash"></i></a>';
+                $moreBtn = '<div class="dropdown dropleft d-inline">
                       <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                        <i class="fas fa-cog"></i>
                       </button>
@@ -35,7 +35,7 @@ class SellerPendingProductsDataTable extends DataTable
                       </div>
                     </div>';
 
-                return $edit_btn . $delete_btn . $more_btn;
+                return $editBtn . $deleteBtn . $moreBtn;
             })
             ->addColumn('image', function ($query) {
                 return "<img src='" . asset($query->thumb_image) . "' alt='' style='width: 70px;'>";

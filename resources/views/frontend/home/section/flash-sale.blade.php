@@ -6,22 +6,23 @@
                     <div class="wsus__flash_coundown">
                         <span class=" end_text">Flash Sale</span>
                         <div class="simply-countdown simply-countdown-one"></div>
-                        <a class="common_btn" href="{{ route('flash-sale') }}">see more <i class="fas fa-caret-right"></i></a>
+                        <a class="common_btn" href="{{ route('flash-sale') }}">see more <i
+                                class="fas fa-caret-right"></i></a>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row flash_sell_slider">
-            @foreach($flash_sale_items as $item)
+            @foreach($flashSaleItems as $item)
                 @php
                     $product = \App\Models\Product::find($item->product_id)
                 @endphp
                 <div class="col-xl-3 col-sm-6 col-lg-4">
                     <div class="wsus__product_item">
-                        <span class="wsus__new">{{ product_type($product->product_type) }}</span>
-                        @if(check_discount($product))
+                        <span class="wsus__new">{{ productType($product->product_type) }}</span>
+                        @if(checkDiscount($product))
                             <span
-                                class="wsus__minus">-{{ calculate_discount_percent($product->price, $product->offer_price) }}%</span>
+                                class="wsus__minus">-{{ calculateDiscountPercent($product->price, $product->offer_price) }}%</span>
                         @endif
                         <a class="wsus__pro_link" href="product_details.html">
                             <img src="{{ asset($product->thumb_image) }}" alt="product" class="img-fluid w-100 img_1"/>
@@ -50,7 +51,7 @@
                                 <span>(133 review)</span>
                             </p>
                             <a class="wsus__pro_name" href="#">{{ $product->name }}</a>
-                            @if(check_discount($product))
+                            @if(checkDiscount($product))
                                 <p class="wsus__price">${{ $product->offer_price }}
                                     <del>${{ $product->price }}</del>
                                 </p>
@@ -71,9 +72,9 @@
     <script>
         $(document).ready(function () {
             simplyCountdown('.simply-countdown-one', {
-                year: {{ date('Y', strtotime($flash_sale_date->end_date)) }},
-                month: {{ date('m', strtotime($flash_sale_date->end_date)) }},
-                day: {{ date('d', strtotime($flash_sale_date->end_date)) }},
+                year: {{ date('Y', strtotime($flashSaleDate->end_date)) }},
+                month: {{ date('m', strtotime($flashSaleDate->end_date)) }},
+                day: {{ date('d', strtotime($flashSaleDate->end_date)) }},
                 // enableUtc: true
             });
         })

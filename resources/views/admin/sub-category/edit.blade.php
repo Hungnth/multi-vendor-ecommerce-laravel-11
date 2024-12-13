@@ -18,7 +18,7 @@
 
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('admin.sub-category.update', $sub_category->id) }}" method="POST">
+                            <form action="{{ route('admin.sub-category.update', $subCategory->id) }}" method="POST">
                                 @csrf
                                 @method('PUT')
 
@@ -28,7 +28,7 @@
                                         <option value="">Select</option>
                                         @foreach($categories as $category)
                                             <option
-                                                {{ $category->id == $sub_category->category_id ? 'selected' : '' }} value="{{ $category->id }}">{{ $category->name }}</option>
+                                                {{ $category->id == $subCategory->category_id ? 'selected' : '' }} value="{{ $category->id }}">{{ $category->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -36,15 +36,15 @@
                                 <div class="form-group">
                                     <label>Name</label>
                                     <input type="text" class="form-control" name="name"
-                                           value="{{ $sub_category->name }}">
+                                           value="{{ $subCategory->name }}">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="inputState">Status</label>
                                     <select id="inputState" class="form-control" name="status">
-                                        <option {{ $sub_category->status == 1 ? 'selected' : '' }} value="1">Active
+                                        <option {{ $subCategory->status == 1 ? 'selected' : '' }} value="1">Active
                                         </option>
-                                        <option {{ $sub_category->status == 0 ? 'selected' : '' }} value="0">Inactive
+                                        <option {{ $subCategory->status == 0 ? 'selected' : '' }} value="0">Inactive
                                         </option>
                                     </select>
                                 </div>

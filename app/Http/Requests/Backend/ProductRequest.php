@@ -16,21 +16,6 @@ class ProductRequest extends FormRequest
      */
     public function rules(): array
     {
-        // return [
-        //     'image' => ['required', 'image', 'max:5120'],
-        //     'name' => ['required', 'string', 'max:200'],
-        //     'category' => ['required'],
-        //     'brand' => ['required'],
-        //     'price' => ['required'],
-        //     'qty' => ['required'],
-        //     'short_description' => ['required', 'max:600'],
-        //     'long_description' => ['required'],
-        //     'video_link' => ['url'],
-        //     'seo_title' => ['nullable', 'max:255'],
-        //     'seo_description' => ['nullable', 'max:600'],
-        //     'status' => ['required'],
-        // ];
-
         $rules = [
             'image' => ['required', 'image', 'max:5120'],
             'name' => ['required', 'string', 'max:200'],

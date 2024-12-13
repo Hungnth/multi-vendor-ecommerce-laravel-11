@@ -43,11 +43,11 @@ class VendorProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        $image_path = $this->upload_image($request, 'image', 'uploads');
+        $imagePath = $this->uploadImage($request, 'image', 'uploads');
 
         $product = new Product();
 
-        $product->thumb_image = $image_path;
+        $product->thumb_image = $imagePath;
         $product->name = $request->name;
         $product->slug = Str::slug($request->name);
         $product->vendor_id = Auth::user()->vendor->id;
@@ -96,15 +96,15 @@ class VendorProductController extends Controller
             abort(404);
         }
 
-        $sub_categories = SubCategory::where('category_id', $product->category_id)->get();
-        $child_categories = ChildCategory::where('sub_category_id', $product->sub_category_id)->get();
+        $subCategories = SubCategory::where('category_id', $product->category_id)->get();
+        $childCategories = ChildCategory::where('sub_category_id', $product->sub_category_id)->get();
         $categories = Category::all();
         $brands = Brand::all();
         return view('vendor.product.edit', compact(
             'product',
             'categories',
-            'sub_categories',
-            'child_categories',
+            'subCategories',
+            'childCategories',
             'brands',
         ));
     }
@@ -120,9 +120,9 @@ class VendorProductController extends Controller
             abort(404);
         }
 
-        $image_path = $this->update_image($request, 'image', 'uploads', $product->thumb_image);
+        $imagePath = $this->updateImage($request, 'image', 'uploads', $product->thumb_image);
 
-        $product->thumb_image = $image_path ?? $product->thumb_image;
+        $product->thumb_image = $imagePath ?? $product->thumb_image;
         $product->name = $request->name;
         $product->slug = Str::slug($request->name);
         $product->vendor_id = Auth::user()->vendor->id;
@@ -164,13 +164,13 @@ class VendorProductController extends Controller
         }
 
         // Delete the product thumb image
-        $this->delete_image($product->thumb_image);
+        $this->deleteImage($product->thumb_image);
 
         // Delete product images
-        $gallery_images = ProductImageGallery::where('product_id', $product->id)->get();
-        foreach ($gallery_images as $gallery_image) {
-            $this->delete_image($gallery_image->image);
-            $gallery_image->delete();
+        $galleryImages = ProductImageGallery::where('product_id', $product->id)->get();
+        foreach ($galleryImages as $galleryImage) {
+            $this->deleteImage($galleryImage->image);
+            $galleryImage->delete();
         }
 
         // Delete product variants if exist
@@ -186,7 +186,7 @@ class VendorProductController extends Controller
         return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
     }
 
-    public function change_status(Request $request)
+    public function changeStatus(Request $request)
     {
         $product = Product::findOrFail($request->id);
         $product->status = $request->status == 'true' ? 1 : 0;
@@ -198,20 +198,20 @@ class VendorProductController extends Controller
     /**
      * Get all product sub categories
      */
-    public function get_sub_categories(Request $request)
+    public function getSubCategories(Request $request)
     {
-        $sub_categories = SubCategory::where('category_id', $request->id)->get();
+        $subCategories = SubCategory::where('category_id', $request->id)->get();
 
-        return $sub_categories;
+        return $subCategories;
     }
 
     /**
      * Get all product child categories
      */
-    public function get_child_categories(Request $request)
+    public function getChildCategories(Request $request)
     {
-        $child_categories = ChildCategory::where('sub_category_id', $request->id)->get();
+        $childCategories = ChildCategory::where('sub_category_id', $request->id)->get();
 
-        return $child_categories;
+        return $childCategories;
     }
 }

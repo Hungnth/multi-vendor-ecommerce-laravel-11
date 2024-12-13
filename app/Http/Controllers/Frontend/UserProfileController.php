@@ -3,18 +3,20 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Traits\ImageUploadTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use File;
 
 class UserProfileController extends Controller
 {
+    use ImageUploadTrait;
     public function index()
     {
         return view('frontend.dashboard.profile');
     }
 
-    public function update_profile(Request $request)
+    public function updateProfile(Request $request)
     {
         $request->validate([
             'name' => ['required', 'max:100'],
@@ -22,22 +24,25 @@ class UserProfileController extends Controller
             'image' => ['image', 'max:5120'],
         ]);
 
+        $imagePath = $this->uploadImage($request, 'image', 'uploads');
+
         $user = Auth::user();
 
-        if ($request->hasFile('image')) {
+/*        if ($request->hasFile('image')) {
             if (File::exists(public_path($user->image))) {
                 File::delete(public_path($user->image));
             }
 
             $image = $request->image;
-            $image_name = rand() . '_' . $image->getClientOriginalName();
-            $image->move(public_path('uploads'), $image_name);
+            $imageName = rand() . '_' . $image->getClientOriginalName();
+            $image->move(public_path('uploads'), $imageName);
 
-            $path = 'uploads/' . $image_name;
+            $path = 'uploads/' . $imageName;
 
             $user->image = $path;
-        }
+        }*/
 
+        $user->image = $imagePath;
         $user->name = $request->name;
         $user->email = $request->email;
         $user->save();
@@ -47,7 +52,7 @@ class UserProfileController extends Controller
         return redirect()->back();
     }
 
-    public function update_password(Request $request)
+    public function updatePassword(Request $request)
     {
         $request->validate([
             'current_password' => ['required', 'current_password'],

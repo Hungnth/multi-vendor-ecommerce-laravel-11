@@ -18,7 +18,7 @@
 
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('admin.child-category.update', $child_category->id) }}"
+                            <form action="{{ route('admin.child-category.update', $childCategory->id) }}"
                                   method="POST">
                                 @csrf
                                 @method('PUT')
@@ -29,7 +29,7 @@
                                         <option value="">Select</option>
                                         @foreach($categories as $category)
                                             <option
-                                                {{ $category->id == $child_category->category->id ? 'selected' : '' }} value="{{ $category->id }}">{{ $category->name }}</option>
+                                                {{ $category->id == $childCategory->category->id ? 'selected' : '' }} value="{{ $category->id }}">{{ $category->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -38,9 +38,9 @@
                                     <label for="inputState">Sub Category</label>
                                     <select id="inputState" class="form-control sub-category" name="sub_category">
                                         <option value="">Select</option>
-                                        @foreach($sub_categories as $sub_category)
+                                        @foreach($subCategories as $subCategory)
                                             <option
-                                                {{ $sub_category->id == $child_category->sub_category->id ? 'selected' : '' }} value="{{ $sub_category->id }}">{{ $sub_category->name }}</option>
+                                                {{ $subCategory->id == $childCategory->subCategory->id ? 'selected' : '' }} value="{{ $subCategory->id }}">{{ $subCategory->name }}</option>
 
                                         @endforeach
 
@@ -50,15 +50,15 @@
                                 <div class="form-group">
                                     <label>Name</label>
                                     <input type="text" class="form-control" name="name"
-                                           value="{{ $child_category->name }}">
+                                           value="{{ $childCategory->name }}">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="inputState">Status</label>
                                     <select id="inputState" class="form-control" name="status">
-                                        <option {{ $child_category->status == 1 ? 'selected' : '' }} value="1">Active
+                                        <option {{ $childCategory->status == 1 ? 'selected' : '' }} value="1">Active
                                         </option>
-                                        <option {{ $child_category->status == 0 ? 'selected' : '' }} value="0">
+                                        <option {{ $childCategory->status == 0 ? 'selected' : '' }} value="0">
                                             Inactive
                                         </option>
                                     </select>

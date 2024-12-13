@@ -118,9 +118,9 @@ class VendorProductVariantController extends Controller
             abort(404);
         }
 
-        $variant_item_check = ProductVariantItem::where('product_variant_id', $variant->id)->count();
+        $variantItemCheck = ProductVariantItem::where('product_variant_id', $variant->id)->count();
 
-        if ($variant_item_check > 0) {
+        if ($variantItemCheck > 0) {
             return response(['status' => 'error', 'message' => 'This variant contains variant items within it. Delete the variant items first before deleting this variant!']);
         }
 
@@ -132,7 +132,7 @@ class VendorProductVariantController extends Controller
     /**
      * Change Variant status
      */
-    public function change_status(Request $request)
+    public function changeStatus(Request $request)
     {
         $variant = ProductVariant::findOrFail($request->id);
 

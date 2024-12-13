@@ -76,10 +76,10 @@
                         @endphp
                         <div class="col-xl-3 col-sm-6 col-lg-4">
                             <div class="wsus__product_item">
-                                <span class="wsus__new">{{ product_type($product->product_type) }}</span>
-                                @if(check_discount($product))
+                                <span class="wsus__new">{{ productType($product->product_type) }}</span>
+                                @if(checkDiscount($product))
                                     <span
-                                        class="wsus__minus">-{{ calculate_discount_percent($product->price, $product->offer_price) }}%</span>
+                                        class="wsus__minus">-{{ calculateDiscountPercent($product->price, $product->offer_price) }}%</span>
                                 @endif
                                 <a class="wsus__pro_link" href="product_details.html">
                                     <img src="{{ asset($product->thumb_image) }}" alt="product"
@@ -109,7 +109,7 @@
                                         <span>(133 review)</span>
                                     </p>
                                     <a class="wsus__pro_name" href="#">{{ $product->name }}</a>
-                                    @if(check_discount($product))
+                                    @if(checkDiscount($product))
                                         <p class="wsus__price">${{ $product->offer_price }}
                                             <del>${{ $product->price }}</del>
                                         </p>
@@ -125,9 +125,9 @@
                 </div>
                 <div class="mt-5">
 
-                @if($flashSaleItems->hasPages())
-                    {{ $flashSaleItems->links() }}
-                @endif
+                    @if($flashSaleItems->hasPages())
+                        {{ $flashSaleItems->links() }}
+                    @endif
                 </div>
             </div>
         </div>

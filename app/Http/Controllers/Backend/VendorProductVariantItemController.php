@@ -39,13 +39,13 @@ class VendorProductVariantItemController extends Controller
             'status' => ['required'],
         ]);
 
-        $variant_item = new ProductVariantItem();
-        $variant_item->product_variant_id = $request->variant_id;
-        $variant_item->name = $request->name;
-        $variant_item->price = $request->price;
-        $variant_item->is_default = $request->is_default;
-        $variant_item->status = $request->status;
-        $variant_item->save();
+        $variantItem = new ProductVariantItem();
+        $variantItem->product_variant_id = $request->variant_id;
+        $variantItem->name = $request->name;
+        $variantItem->price = $request->price;
+        $variantItem->is_default = $request->is_default;
+        $variantItem->status = $request->status;
+        $variantItem->save();
 
         flash()->flash('success', 'Created Successfully!', [], 'Product Variant Item');
 
@@ -53,13 +53,13 @@ class VendorProductVariantItemController extends Controller
 
     }
 
-    public function edit(string $variant_item_id)
+    public function edit(string $variantItemId)
     {
-        $variant_item = ProductVariantItem::findOrFail($variant_item_id);
-        return view('vendor.product.product-variant-item.edit', compact('variant_item'));
+        $variantItem = ProductVariantItem::findOrFail($variantItemId);
+        return view('vendor.product.product-variant-item.edit', compact('variantItem'));
     }
 
-    public function update(Request $request, string $variant_item_id)
+    public function update(Request $request, string $variantItemId)
     {
         $request->validate([
             'name' => ['required', 'max:255'],
@@ -68,34 +68,34 @@ class VendorProductVariantItemController extends Controller
             'status' => ['required'],
         ]);
 
-        $variant_item = ProductVariantItem::findOrFail($variant_item_id);
-        $variant_item->name = $request->name;
-        $variant_item->price = $request->price;
-        $variant_item->is_default = $request->is_default;
-        $variant_item->status = $request->status;
-        $variant_item->save();
+        $variantItem = ProductVariantItem::findOrFail($variantItemId);
+        $variantItem->name = $request->name;
+        $variantItem->price = $request->price;
+        $variantItem->is_default = $request->is_default;
+        $variantItem->status = $request->status;
+        $variantItem->save();
 
         flash()->flash('success', 'Updated Successfully!', [], 'Product Variant Item');
 
         return redirect()->route('vendor.products-variant-item.index', [
-            'product_id' => $variant_item->product_variant->product_id,
-            'variant_id' => $variant_item->product_variant_id
+            'product_id' => $variantItem->productVariant->product_id,
+            'variant_id' => $variantItem->product_variant_id
         ]);
     }
 
     public function destroy(string $variant_item_id)
     {
-        $variant_item = ProductVariantItem::findOrFail($variant_item_id);
-        $variant_item->delete();
+        $variantItem = ProductVariantItem::findOrFail($variant_item_id);
+        $variantItem->delete();
 
         return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
     }
 
-    public function change_status(Request $request)
+    public function changeStatus(Request $request)
     {
-        $variant_item = ProductVariantItem::findOrFail($request->id);
-        $variant_item->status = $request->status == 'true' ? 1 : 0;
-        $variant_item->save();
+        $variantItem = ProductVariantItem::findOrFail($request->id);
+        $variantItem->status = $request->status == 'true' ? 1 : 0;
+        $variantItem->save();
 
         return response(['status' => 'success', 'message' => 'Status Changed Successfully!']);
     }

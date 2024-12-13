@@ -32,10 +32,10 @@ class ChildCategoryController extends Controller
     /**
      * Get sub categories
      */
-    public function get_sub_categories(Request $request)
+    public function getSubCategories(Request $request)
     {
-        $sub_categories = SubCategory::where('category_id', $request->id)->where('status', 1)->get();
-        return $sub_categories;
+        $subCategories = SubCategory::where('category_id', $request->id)->where('status', 1)->get();
+        return $subCategories;
     }
 
     /**
@@ -50,13 +50,13 @@ class ChildCategoryController extends Controller
             'status' => ['required'],
         ]);
 
-        $child_category = new ChildCategory();
-        $child_category->category_id = $request->category;
-        $child_category->sub_category_id = $request->sub_category;
-        $child_category->name = $request->name;
-        $child_category->slug = Str::slug($request->name);
-        $child_category->status = $request->status;
-        $child_category->save();
+        $childCategory = new ChildCategory();
+        $childCategory->category_id = $request->category;
+        $childCategory->sub_category_id = $request->sub_category;
+        $childCategory->name = $request->name;
+        $childCategory->slug = Str::slug($request->name);
+        $childCategory->status = $request->status;
+        $childCategory->save();
 
         flash()->flash('success', 'Created Successfully!', [], 'Child Category');
 
@@ -77,10 +77,10 @@ class ChildCategoryController extends Controller
     public function edit(string $id)
     {
         $categories = Category::all();
-        $child_category = ChildCategory::findOrFail($id);
-        $sub_categories = SubCategory::where('category_id', $child_category->category->id)->get();
+        $childCategory = ChildCategory::findOrFail($id);
+        $subCategories = SubCategory::where('category_id', $childCategory->category->id)->get();
 
-        return view('admin.child-category.edit', compact('categories', 'sub_categories', 'child_category'));
+        return view('admin.child-category.edit', compact('categories', 'subCategories', 'childCategory'));
     }
 
     /**
@@ -95,14 +95,14 @@ class ChildCategoryController extends Controller
             'status' => ['required'],
         ]);
 
-        $child_category = ChildCategory::findOrfail($id);
+        $childCategory = ChildCategory::findOrfail($id);
 
-        $child_category->category_id = $request->category;
-        $child_category->sub_category_id = $request->sub_category;
-        $child_category->name = $request->name;
-        $child_category->slug = Str::slug($request->name);
-        $child_category->status = $request->status;
-        $child_category->save();
+        $childCategory->category_id = $request->category;
+        $childCategory->sub_category_id = $request->sub_category;
+        $childCategory->name = $request->name;
+        $childCategory->slug = Str::slug($request->name);
+        $childCategory->status = $request->status;
+        $childCategory->save();
 
         flash()->flash('success', 'Update Successfully!', [], 'Child Category');
 
@@ -114,13 +114,13 @@ class ChildCategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        $child_category = ChildCategory::findOrfail($id);
-        $child_category->delete();
+        $childCategory = ChildCategory::findOrfail($id);
+        $childCategory->delete();
 
         return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
     }
 
-    public function change_status(Request $request)
+    public function changeStatus(Request $request)
     {
         $category = ChildCategory::findOrFail($request->id);
         $category->status = $request->status == 'true' ? 1 : 0;

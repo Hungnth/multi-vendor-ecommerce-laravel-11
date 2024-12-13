@@ -45,9 +45,9 @@ class SliderController extends Controller
         $slider = new Slider();
 
         // Handle file upload
-        $image_path = $this->upload_image($request, 'banner', 'uploads');
+        $imagePath = $this->uploadImage($request, 'banner', 'uploads');
 
-        $slider->banner = $image_path;
+        $slider->banner = $imagePath;
         $slider->type = $request->type;
         $slider->title = $request->title;
         $slider->starting_price = $request->starting_price;
@@ -95,9 +95,9 @@ class SliderController extends Controller
         $slider = Slider::findOrFail($id);
 
         // Handle file upload
-        $image_path = $this->update_image($request, 'banner', 'uploads', $slider->banner);
+        $imagePath = $this->updateImage($request, 'banner', 'uploads', $slider->banner);
 
-        $slider->banner = $image_path ?? $slider->banner;
+        $slider->banner = $imagePath ?? $slider->banner;
         $slider->type = $request->type;
         $slider->title = $request->title;
         $slider->starting_price = $request->starting_price;
@@ -117,7 +117,7 @@ class SliderController extends Controller
     public function destroy(string $id)
     {
         $slider = Slider::findOrFail($id);
-        $this->delete_image($slider->banner);
+        $this->deleteImage($slider->banner);
         $slider->delete();
 
         return response(['status' => 'success', 'message' => 'Deleted Successfully!']);

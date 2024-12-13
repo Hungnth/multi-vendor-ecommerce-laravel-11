@@ -41,12 +41,12 @@ class SubCategoryController extends Controller
             'status' => ['required'],
         ]);
 
-        $sub_category = new SubCategory();
-        $sub_category->category_id = $request->category;
-        $sub_category->name = $request->name;
-        $sub_category->slug = Str::slug($request->name);
-        $sub_category->status = $request->status;
-        $sub_category->save();
+        $subCategory = new SubCategory();
+        $subCategory->category_id = $request->category;
+        $subCategory->name = $request->name;
+        $subCategory->slug = Str::slug($request->name);
+        $subCategory->status = $request->status;
+        $subCategory->save();
 
         flash()->flash('success', 'Created Successfully!', [], 'Sub Category');
 
@@ -67,8 +67,8 @@ class SubCategoryController extends Controller
     public function edit(string $id)
     {
         $categories = Category::all();
-        $sub_category = SubCategory::findOrFail($id);
-        return view('admin.sub-category.edit', compact('sub_category', 'categories'));
+        $subCategory = SubCategory::findOrFail($id);
+        return view('admin.sub-category.edit', compact('subCategory', 'categories'));
     }
 
     /**
@@ -82,13 +82,13 @@ class SubCategoryController extends Controller
             'status' => ['required'],
         ]);
 
-        $sub_category = SubCategory::findOrFail($id);
+        $subCategory = SubCategory::findOrFail($id);
 
-        $sub_category->category_id = $request->category;
-        $sub_category->name = $request->name;
-        $sub_category->slug = Str::slug($request->name);
-        $sub_category->status = $request->status;
-        $sub_category->save();
+        $subCategory->category_id = $request->category;
+        $subCategory->name = $request->name;
+        $subCategory->slug = Str::slug($request->name);
+        $subCategory->status = $request->status;
+        $subCategory->save();
 
         flash()->flash('success', 'Updated Successfully!', [], 'Sub Category');
 
@@ -100,22 +100,23 @@ class SubCategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        $sub_category = SubCategory::findOrFail($id);
+        $subCategory = SubCategory::findOrFail($id);
 
-        $child_category = ChildCategory::where('sub_category_id', $sub_category->id)->count();
-        if ($child_category > 0) {
+        $childCategory = ChildCategory::where('sub_category_id', $subCategory->id)->count();
+        if ($childCategory > 0) {
             return response(['status' => 'error', 'message' => 'This items contains sub items for delete this you have to delete the sub items first!']);
         }
 
-        $sub_category->delete();
+        $subCategory->delete();
+
         return response()->json(['status' => 'success', 'message' => 'Deleted Successfully']);
     }
 
-    public function change_status(Request $request)
+    public function changeStatus(Request $request)
     {
-        $sub_category = SubCategory::findOrFail($request->id);
-        $sub_category->status = $request->status == 'true' ? 1 : 0;
-        $sub_category->save();
+        $subCategory = SubCategory::findOrFail($request->id);
+        $subCategory->status = $request->status == 'true' ? 1 : 0;
+        $subCategory->save();
 
         return response(['message' => 'Status Changed Successfully!']);
     }

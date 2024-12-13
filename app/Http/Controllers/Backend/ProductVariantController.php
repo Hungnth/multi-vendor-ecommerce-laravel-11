@@ -93,9 +93,9 @@ class ProductVariantController extends Controller
     public function destroy(string $id)
     {
         $variant = ProductVariant::findOrFail($id);
-        $variant_item_check = ProductVariantItem::where('product_variant_id', $variant->id)->count();
+        $variantItemCheck = ProductVariantItem::where('product_variant_id', $variant->id)->count();
 
-        if ($variant_item_check > 0) {
+        if ($variantItemCheck > 0) {
             return response(['status' => 'error', 'message' => 'This variant contains variant items within it. Delete the variant items first before deleting this variant!']);
         }
 
@@ -104,7 +104,7 @@ class ProductVariantController extends Controller
         return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
     }
 
-    public function change_status(Request $request)
+    public function changeStatus(Request $request)
     {
         $variant = ProductVariant::findOrFail($request->id);
         $variant->status = $request->status == 'true' ? 1 : 0;

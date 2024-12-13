@@ -7,38 +7,38 @@ use File;
 
 trait ImageUploadTrait
 {
-    public function upload_image(Request $request, $input_name, $path)
+    public function uploadImage(Request $request, $input_name, $path)
     {
         if ($request->hasFile($input_name)) {
 
             $image = $request->{$input_name};
             $ext = $image->getClientOriginalExtension();
-            $image_name = 'media_' . uniqid() . '.' . $ext;
-            $image->move(public_path($path), $image_name);
+            $imageName = 'media_' . uniqid() . '.' . $ext;
+            $image->move(public_path($path), $imageName);
 
-            return $path . '/' . $image_name;
+            return $path . '/' . $imageName;
         }
     }
 
-    public function upload_multi_image(Request $request, $input_name, $path)
+    public function uploadMultiImage(Request $request, $input_name, $path)
     {
-        $image_paths = [];
+        $imagePaths = [];
         if ($request->hasFile($input_name)) {
 
             $images = $request->{$input_name};
 
             foreach ($images as $image) {
                 $ext = $image->getClientOriginalExtension();
-                $image_name = 'media_' . uniqid() . '.' . $ext;
-                $image->move(public_path($path), $image_name);
+                $imageName = 'media_' . uniqid() . '.' . $ext;
+                $image->move(public_path($path), $imageName);
 
-                $image_paths[] = $path . '/' . $image_name;
+                $imagePaths[] = $path . '/' . $imageName;
             }
-            return $image_paths;
+            return $imagePaths;
         }
     }
 
-    public function update_image(Request $request, $input_name, $path, $old_path = null)
+    public function updateImage(Request $request, $input_name, $path, $old_path = null)
     {
         if ($request->hasFile($input_name)) {
             if (File::exists(public_path($old_path))) {
@@ -47,17 +47,17 @@ trait ImageUploadTrait
 
             $image = $request->{$input_name};
             $ext = $image->getClientOriginalExtension();
-            $image_name = 'media_' . uniqid() . '.' . $ext;
-            $image->move(public_path($path), $image_name);
+            $imageName = 'media_' . uniqid() . '.' . $ext;
+            $image->move(public_path($path), $imageName);
 
-            return $path . '/' . $image_name;
+            return $path . '/' . $imageName;
         }
     }
 
     /**
      * Handle delete file
      */
-    public function delete_image(string $path): void
+    public function deleteImage(string $path): void
     {
         if (File::exists(public_path($path))) {
             File::delete(public_path($path));

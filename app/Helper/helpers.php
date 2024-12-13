@@ -3,7 +3,7 @@
 /**
  * Set Sidebar item active
  */
-function set_active(array $route)
+function setActive(array $route)
 {
     if (is_array($route)) {
         foreach ($route as $r) {
@@ -15,27 +15,27 @@ function set_active(array $route)
 }
 
 // Check product have discount
-function check_discount($product): bool
+function checkDiscount($product): bool
 {
-    $current_date = date('Y-m-d');
+    $currentDate = date('Y-m-d');
 
-    if ($product->offer_price > 0 && $current_date >= $product->offer_start_date && $current_date <= $product->offer_end_date) {
+    if ($product->offer_price > 0 && $currentDate >= $product->offer_start_date && $currentDate <= $product->offer_end_date) {
         return true;
     }
     return false;
 }
 
 // Calculate discount percent
-function calculate_discount_percent($original_price, $discount_price)
+function calculateDiscountPercent($original_price, $discount_price): float
 {
-    $discount_amount = $original_price - $discount_price;
-    $discount_percent = round(($discount_amount / $original_price) * 100);
+    $discountAmount = $original_price - $discount_price;
+    $discountPercent = round(($discountAmount / $original_price) * 100);
 
-    return $discount_percent;
+    return $discountPercent;
 }
 
 // Check the product type
-function product_type(string $type): string
+function productType(string $type): string
 {
     return match ($type) {
         'new_arrival' => 'New',

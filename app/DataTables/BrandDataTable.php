@@ -23,22 +23,22 @@ class BrandDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($query) {
-                $edit_btn = '<a href="' . route("admin.brand.edit", $query->id) . '" class="btn btn-primary mr-2"><i class="fas fa-edit"></i></a>';
-                $delete_btn = '<a href="' . route("admin.brand.destroy", $query->id) . '" class="btn btn-danger delete-item"><i class="fas fa-trash"></i></a>';
+                $editBtn = '<a href="' . route("admin.brand.edit", $query->id) . '" class="btn btn-primary mr-2"><i class="fas fa-edit"></i></a>';
+                $deleteBtn = '<a href="' . route("admin.brand.destroy", $query->id) . '" class="btn btn-danger delete-item"><i class="fas fa-trash"></i></a>';
 
-                return $edit_btn . $delete_btn;
+                return $editBtn . $deleteBtn;
             })
             ->addColumn('logo', function ($query) {
                 return "<img src='" . asset($query->logo) . "' alt='' style='width: 100px;'>";
             })
             ->addColumn('is_featured', function ($query) {
                 $active = '<i class="badge badge-success">Yes</i>';
-                $in_active = '<i class="badge badge-danger">No</i>';
+                $inActive = '<i class="badge badge-danger">No</i>';
 
                 if ($query->is_featured == 1) {
                     return $active;
                 } else {
-                    return $in_active;
+                    return $inActive;
                 }
             })
             ->addColumn('status', function ($query) {

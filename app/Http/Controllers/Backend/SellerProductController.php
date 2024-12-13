@@ -15,12 +15,12 @@ class SellerProductController extends Controller
         return $dataTable->render('admin.product.seller-product.index');
     }
 
-    public function pending_products(SellerPendingProductsDataTable $dataTable)
+    public function pendingProducts(SellerPendingProductsDataTable $dataTable)
     {
         return $dataTable->render('admin.product.seller-pending-product.index');
     }
 
-    public function change_approve_status(Request $request)
+    public function changeApproveStatus(Request $request)
     {
         $product = Product::findOrFail($request->id);
         $product->is_approved = $request->value;

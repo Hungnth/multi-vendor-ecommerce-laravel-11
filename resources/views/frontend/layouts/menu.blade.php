@@ -1,8 +1,8 @@
 @php
     $categories = \App\Models\Category::where('status', 1)
-    ->with(['sub_categories' => function ($query) {
+    ->with(['subCategories' => function ($query) {
         $query->where('status', 1)
-        ->with(['child_categories' => function ($query) {
+        ->with(['childCategories' => function ($query) {
             $query->where('status', 1);
         }]);
 }])
@@ -21,17 +21,17 @@
 
                         {{--<li><a href="#"><i class="fas fa-star"></i> hot promotions</a></li>--}}
                         @foreach($categories as $category)
-                            <li><a class="{{ count($category->sub_categories) ? 'wsus__droap_arrow' : '' }}" href="#"><i
+                            <li><a class="{{ count($category->subCategories) ? 'wsus__droap_arrow' : '' }}" href="#"><i
                                         class="{{ $category->icon }}"></i> {{ $category->name }} </a>
-                                @if(count($category->sub_categories) > 0)
+                                @if(count($category->subCategories) > 0)
                                     <ul class="wsus_menu_cat_droapdown">
-                                        @foreach($category->sub_categories as $sub_category)
-                                            <li><a href="#">{{ $sub_category->name }} <i
-                                                        class="{{ count($sub_category->child_categories) > 0 ? 'fas fa-angle-right' : '' }}"></i></a>
-                                                @if (count($sub_category->child_categories) > 0)
+                                        @foreach($category->subCategories as $subCategory)
+                                            <li><a href="#">{{ $subCategory->name }} <i
+                                                        class="{{ count($subCategory->childCategories) > 0 ? 'fas fa-angle-right' : '' }}"></i></a>
+                                                @if (count($subCategory->childCategories) > 0)
                                                     <ul class="wsus__sub_category">
-                                                        @foreach($sub_category->child_categories as $child_category)
-                                                            <li><a href="#">{{ $child_category->name }}</a></li>
+                                                        @foreach($subCategory->childCategories as $childCategory)
+                                                            <li><a href="#">{{ $childCategory->name }}</a></li>
                                                         @endforeach
                                                     </ul>
                                                 @endif
@@ -178,20 +178,22 @@
             <div class="wsus__mobile_menu_main_menu">
                 <div class="accordion accordion-flush" id="accordionFlushExample">
                     <ul class="wsus_mobile_menu_category">
-                        @foreach($categories as $category_item)
+                        @foreach($categories as $categoryItem)
                             <li>
-                                <a href="#" class="{{ count($category_item->sub_categories) > 0 ? 'accordion-button' : '' }} collapsed" data-bs-toggle="collapse"
+                                <a href="#"
+                                   class="{{ count($categoryItem->subCategories) > 0 ? 'accordion-button' : '' }} collapsed"
+                                   data-bs-toggle="collapse"
                                    data-bs-target="#flush-collapseThreew-{{ $loop->index }}" aria-expanded="false"
                                    aria-controls="flush-collapseThreew-{{ $loop->index }}"><i
-                                        class="{{ $category_item->icon }}"></i> {{ $category_item->name }}</a>
+                                        class="{{ $categoryItem->icon }}"></i> {{ $categoryItem->name }}</a>
 
-                                @if (count($category_item->sub_categories) >> 0)
+                                @if (count($categoryItem->subCategories) >> 0)
                                     <div id="flush-collapseThreew-{{ $loop->index }}"
                                          class="accordion-collapse collapse"
                                          data-bs-parent="#accordionFlushExample">
                                         <div class="accordion-body">
                                             <ul>
-                                                @foreach($category_item->sub_categories as $sub_category_item)
+                                                @foreach($categoryItem->subCategories as $sub_category_item)
 
                                                     <li><a href="#">{{ $sub_category_item->name }}</a></li>
                                                 @endforeach

@@ -31,6 +31,6 @@ Route::get('flash-sale', [FlashSaleController::class, 'index'])->name('flash-sal
 Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 'user.'], function () {
     Route::get('dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
     Route::get('profile', [UserProfileController::class, 'index'])->name('profile');
-    Route::put('profile', [UserProfileController::class, 'update_profile'])->name('profile.update');
-    Route::post('profile', [UserProfileController::class, 'update_password'])->name('profile.update.password');
+    Route::put('profile', [UserProfileController::class, 'updateProfile'])->name('profile.update');
+    Route::post('profile', [UserProfileController::class, 'updatePassword'])->name('profile.update.password');
 });

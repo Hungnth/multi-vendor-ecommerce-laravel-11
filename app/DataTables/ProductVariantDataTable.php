@@ -23,12 +23,11 @@ class ProductVariantDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($query) {
-                $variant_item = '<a href="' . route("admin.products-variant-item.index", ['product_id' => request()->product, 'variant_id' => $query->id]) . '" class="btn btn-info mr-2"><i class="fas fa-edit"></i> Variant Items</a>';
-                // $manage_option = '<a href="' . route("admin.products.edit", $query->id) . '" class="btn btn-info mr-2"><i class="fas fa-edit"></i> Variant Items</a>';
-                $edit_btn = '<a href="' . route("admin.products-variant.edit", $query->id) . '" class="btn btn-primary mr-2"><i class="fas fa-edit"></i></a>';
-                $delete_btn = '<a href="' . route("admin.products-variant.destroy", $query->id) . '" class="btn btn-danger mr-1 delete-item"><i class="fas fa-trash"></i></a>';
+                $variantItem = '<a href="' . route("admin.products-variant-item.index", ['product_id' => request()->product, 'variant_id' => $query->id]) . '" class="btn btn-info mr-2"><i class="fas fa-edit"></i> Variant Items</a>';
+                $editBtn = '<a href="' . route("admin.products-variant.edit", $query->id) . '" class="btn btn-primary mr-2"><i class="fas fa-edit"></i></a>';
+                $deleteBtn = '<a href="' . route("admin.products-variant.destroy", $query->id) . '" class="btn btn-danger mr-1 delete-item"><i class="fas fa-trash"></i></a>';
 
-                return $variant_item . $edit_btn . $delete_btn;
+                return $variantItem . $editBtn . $deleteBtn;
             })
             ->addColumn('status', function ($query) {
                 $checked = $query->status == 1 ? 'checked' : '';

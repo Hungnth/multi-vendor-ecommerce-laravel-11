@@ -23,16 +23,16 @@ class ChildCategoryDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($query) {
-                $edit_btn = '<a href="' . route("admin.child-category.edit", $query->id) . '" class="btn btn-primary mr-2"><i class="fas fa-edit"></i></a>';
-                $delete_btn = '<a href="' . route("admin.child-category.destroy", $query->id) . '" class="btn btn-danger delete-item"><i class="fas fa-trash"></i></a>';
+                $editBtn = '<a href="' . route("admin.child-category.edit", $query->id) . '" class="btn btn-primary mr-2"><i class="fas fa-edit"></i></a>';
+                $deleteBtn = '<a href="' . route("admin.child-category.destroy", $query->id) . '" class="btn btn-danger delete-item"><i class="fas fa-trash"></i></a>';
 
-                return $edit_btn . $delete_btn;
+                return $editBtn . $deleteBtn;
             })
             ->addColumn('category', function ($query) {
                 return $query->category->name;
             })
             ->addColumn('sub_category', function ($query) {
-                return $query->sub_category->name;
+                return $query->subCategory->name;
             })
             ->addColumn('status', function ($query) {
                 $checked = $query->status == 1 ? 'checked' : '';

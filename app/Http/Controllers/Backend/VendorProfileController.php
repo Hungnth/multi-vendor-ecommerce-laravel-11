@@ -14,7 +14,7 @@ class VendorProfileController extends Controller
         return view('vendor.dashboard.profile');
     }
 
-    public function update_profile(Request $request)
+    public function updateProfile(Request $request)
     {
         $request->validate([
             'name' => ['required', 'max:100'],
@@ -30,10 +30,10 @@ class VendorProfileController extends Controller
             }
 
             $image = $request->image;
-            $image_name = rand() . '_' . $image->getClientOriginalName();
-            $image->move(public_path('uploads'), $image_name);
+            $imageName = rand() . '_' . $image->getClientOriginalName();
+            $image->move(public_path('uploads'), $imageName);
 
-            $path = 'uploads/' . $image_name;
+            $path = 'uploads/' . $imageName;
 
             $user->image = $path;
         }
@@ -47,7 +47,7 @@ class VendorProfileController extends Controller
         return redirect()->back();
     }
 
-    public function update_password(Request $request)
+    public function updatePassword(Request $request)
     {
         $request->validate([
             'current_password' => ['required', 'current_password'],

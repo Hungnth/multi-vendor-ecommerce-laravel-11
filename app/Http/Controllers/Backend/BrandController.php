@@ -41,10 +41,10 @@ class BrandController extends Controller
             'status' => ['required'],
         ]);
 
-        $logo_path = $this->upload_image($request, 'logo', 'uploads');
+        $logoPath = $this->uploadImage($request, 'logo', 'uploads');
 
         $brand = new Brand();
-        $brand->logo = $logo_path;
+        $brand->logo = $logoPath;
         $brand->name = $request->name;
         $brand->slug = Str::slug($request->name);
         $brand->is_featured = $request->is_featured;
@@ -87,9 +87,9 @@ class BrandController extends Controller
 
         $brand = Brand::findOrFail($id);
 
-        $logo_path = $this->update_image($request, 'logo', 'uploads', $brand->logo);
+        $logoPath = $this->updateImage($request, 'logo', 'uploads', $brand->logo);
 
-        $brand->logo = $logo_path ?? $brand->logo;
+        $brand->logo = $logoPath ?? $brand->logo;
         $brand->name = $request->name;
         $brand->slug = Str::slug($request->name);
         $brand->is_featured = $request->is_featured;
@@ -107,13 +107,13 @@ class BrandController extends Controller
     public function destroy(string $id)
     {
         $brand = Brand::findOrFail($id);
-        $this->delete_image($brand->logo);
+        $this->deleteImage($brand->logo);
         $brand->delete();
 
         return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
     }
 
-    public function change_status(Request $request)
+    public function changeStatus(Request $request)
     {
         $category = Brand::findOrFail($request->id);
         $category->status = $request->status == 'true' ? 1 : 0;

@@ -24,9 +24,9 @@ class VendorProductDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($query) {
-                $edit_btn = '<a href="' . route("vendor.products.edit", $query->id) . '" class="btn btn-primary me-2"><i class="fas fa-edit"></i></a>';
-                $delete_btn = '<a href="' . route("vendor.products.destroy", $query->id) . '" class="btn btn-danger me-1 delete-item"><i class="fas fa-trash"></i></a>';
-                $more_btn = '<div class="btn-group dropstart ms-1">
+                $editBtn = '<a href="' . route("vendor.products.edit", $query->id) . '" class="btn btn-primary me-2"><i class="fas fa-edit"></i></a>';
+                $deleteBtn = '<a href="' . route("vendor.products.destroy", $query->id) . '" class="btn btn-danger me-1 delete-item"><i class="fas fa-trash"></i></a>';
+                $moreBtn = '<div class="btn-group dropstart ms-1">
                                 <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fas fa-cog"></i>
                                 </button>
@@ -36,7 +36,7 @@ class VendorProductDataTable extends DataTable
                                 </ul>
                             </div>';
 
-                return $edit_btn . $delete_btn . $more_btn;
+                return $editBtn . $deleteBtn . $moreBtn;
             })
             ->addColumn('image', function ($query) {
                 return "<img src='" . asset($query->thumb_image) . "' alt='' style='width: 70px;'>";

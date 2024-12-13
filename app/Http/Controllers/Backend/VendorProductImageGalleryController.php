@@ -47,13 +47,13 @@ class VendorProductImageGalleryController extends Controller
         ]);
 
         // Handle images upload
-        $image_paths = $this->upload_multi_image($request, 'image', 'uploads');
+        $imagepaths = $this->uploadMultiImage($request, 'image', 'uploads');
 
-        foreach ($image_paths as $image_path) {
-            $product_image_gallery = new ProductImageGallery();
-            $product_image_gallery->image = $image_path;
-            $product_image_gallery->product_id = $request->product;
-            $product_image_gallery->save();
+        foreach ($imagepaths as $image_path) {
+            $productImageGallery = new ProductImageGallery();
+            $productImageGallery->image = $image_path;
+            $productImageGallery->product_id = $request->product;
+            $productImageGallery->save();
         }
 
         flash()->flash('success', 'Uploaded Successfully!', [], 'Product Image Gallery');
@@ -90,15 +90,15 @@ class VendorProductImageGalleryController extends Controller
      */
     public function destroy(string $id)
     {
-        $product_image = ProductImageGallery::findOrFail($id);
+        $productImage = ProductImageGallery::findOrFail($id);
 
         // Check permissions
-        if ($product_image->product->vendor_id != Auth::user()->vendor->id) {
+        if ($productImage->product->vendor_id != Auth::user()->vendor->id) {
             abort(404);
         }
 
-        $this->delete_image($product_image->image);
-        $product_image->delete();
+        $this->deleteImage($productImage->image);
+        $productImage->delete();
 
         return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
     }

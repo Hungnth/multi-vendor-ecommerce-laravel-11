@@ -23,8 +23,7 @@ class VendorProductImageGalleryDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($query) {
-                $delete_btn = '<a href="' . route("vendor.products-image-gallery.destroy", $query->id) . '" class="btn btn-danger delete-item"><i class="fas fa-trash"></i></a>';
-                return $delete_btn;
+                return '<a href="' . route("vendor.products-image-gallery.destroy", $query->id) . '" class="btn btn-danger delete-item"><i class="fas fa-trash"></i></a>';
             })
             ->addColumn('image', function ($query) {
                 // dd($query->id);
