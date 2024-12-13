@@ -1634,7 +1634,7 @@ PRODUCT MODAL VIEW END
     font-weight: 500;
     border-radius: 3px;
     z-index: 1;
-    padding: 0px 10px;
+    padding: 0 10px;
 }
 
 .wsus__minus {
@@ -8619,7 +8619,7 @@ header .wsus__call_text a:hover {
 /* product start */
 .wsus__new,
 .wsus__minus {
-    width: 50px;
+    /* width: 50px; */
     border-radius: 30px;
     opacity: 0.3;
     transition: all linear 0.3s;
@@ -9444,3 +9444,27 @@ a:not([href]):not([class]):hover {
     width: 48px;
     border-radius: 2em !important;
 }
+
+/* Pagination */
+.page-item > .page-link,
+.page-item.active > .page-link,
+.page-item.disabled > .page-link {
+    width: 35px;
+    height: 35px;
+    padding: 0;
+    text-align: center;
+    line-height: 35px;
+    font-size: 13px;
+    font-weight: 400;
+    border-radius: 50%;
+    border: 1px solid #08C;
+    margin-right: 10px;
+    transition: all linear 0.3s;
+}
+
+.page-item > .page-link {
+    border-radius: 100% !important;
+}
+
+
+
