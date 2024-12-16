@@ -19,8 +19,19 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function productImageGallery(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function productImageGalleries(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(ProductImageGallery::class);
     }
+
+    public function variants(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ProductVariant::class);
+    }
+
+    public function brand(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Brand::class);
+    }
+
 }

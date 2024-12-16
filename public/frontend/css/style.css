@@ -9466,5 +9466,7 @@ a:not([href]):not([class]):hover {
     border-radius: 100% !important;
 }
 
-
+#sticky_pro_zoom {
+    z-index: 100;
+}
 

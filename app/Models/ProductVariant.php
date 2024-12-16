@@ -9,7 +9,7 @@ class ProductVariant extends Model
 {
     use HasFactory;
 
-    public function product_variant_items(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function productVariantItems(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(ProductVariantItem::class);
     }
