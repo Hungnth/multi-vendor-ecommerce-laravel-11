@@ -1,5 +1,7 @@
 @extends('vendor.layouts.master')
-
+@section('title')
+    {{ $settings->site_name }} - Shop Profile
+@endsection
 @push('css')
     <link rel="stylesheet" href="{{ asset('backend/assets/modules/summernote/summernote-bs4.css') }}">
 @endpush

@@ -4,7 +4,7 @@
             <div class="col-xl-3 col-sm-7 col-md-6 col-lg-3">
                 <div class="wsus__footer_content">
                     <a class="wsus__footer_2_logo" href="#">
-                        <img src="images/logo_2.png" alt="logo">
+                        <img src="{{ asset('frontend/images/logo_2.png') }}" alt="logo">
                     </a>
                     <a class="action" href="callto:+8896254857456"><i class="fas fa-phone-alt"></i>
                         +8896254857456</a>

@@ -1,5 +1,7 @@
 @extends('frontend.dashboard.layouts.master')
-
+@section('title')
+    {{ $settings->site_name }} - Address
+@endsection
 @section('content')
     <section id="wsus__dashboard">
         <div class="container-fluid">
@@ -27,7 +29,7 @@
                                         </ul>
                                         <div class="wsus__address_btn">
                                             <a href="{{ route('user.address.edit', $address->id) }}" class="edit"><i class="fal fa-edit"></i> Edit</a>
-                                            
+
                                             <a href="{{ route('user.address.destroy', $address->id) }}" class="del delete-item"><i class="fal fa-trash-alt"></i> Delete</a>
                                         </div>
                                     </div>

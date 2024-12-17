@@ -326,6 +326,8 @@ header {
     width: 60%;
 }
 
+
+
 .wsus__category_search .select2-container--default .select2-selection--single {
     border-radius: 0;
     padding: 0;
@@ -9470,3 +9472,17 @@ a:not([href]):not([class]):hover {
     z-index: 100;
 }
 
+.select2-container {
+    z-index: 9999;
+}
+.product_qty_wrapper {
+    display: flex;
+}
+.product_qty_wrapper > .product_qty {
+    width: 48px;
+    height: 36px;
+    padding-left: 8px;
+    margin: 0 5px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+}

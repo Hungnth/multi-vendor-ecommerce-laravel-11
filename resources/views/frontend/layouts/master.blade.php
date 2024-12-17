@@ -8,7 +8,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
           rel="stylesheet">
     <meta name="csrf-token" id="csrf-token" content="{{ csrf_token() }}">
-    <title>Sazao || e-Commerce by Laravel 11</title>
+    <title>
+        @yield('title')
+    </title>
 
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/all.min.css') }}">

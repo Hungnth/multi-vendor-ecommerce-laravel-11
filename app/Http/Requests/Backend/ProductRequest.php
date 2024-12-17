@@ -25,7 +25,7 @@ class ProductRequest extends FormRequest
             'qty' => ['required'],
             'short_description' => ['required', 'max:600'],
             'long_description' => ['required'],
-            'video_link' => ['url'],
+            'video_link' => ['nullable', 'url'],
             'seo_title' => ['nullable', 'max:255'],
             'seo_description' => ['nullable', 'max:600'],
             'status' => ['required'],

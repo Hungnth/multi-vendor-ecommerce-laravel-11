@@ -9,7 +9,7 @@ class ProductVariantItem extends Model
 {
     use HasFactory;
 
-    public function productVariant()
+    public function productVariant(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(ProductVariant::class);
     }

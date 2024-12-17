@@ -1,5 +1,7 @@
 @extends('vendor.layouts.master')
-
+@section('title')
+    {{ $settings->site_name }} - Image Gallery
+@endsection
 @push('css')
 @endpush
 

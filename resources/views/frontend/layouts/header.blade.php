@@ -44,7 +44,7 @@
     </div>
 
     <div class="wsus__mini_cart">
-        <h4>shopping cart <span class="wsus_close_mini_cart"><i class="far fa-times"></i></span></h4>
+        <h4>Shopping Cart <span class="wsus_close_mini_cart"><i class="far fa-times"></i></span></h4>
         <ul>
             <li>
                 <div class="wsus__cart_img">
@@ -99,8 +99,8 @@
         </ul>
         <h5>sub total <span>$3540</span></h5>
         <div class="wsus__minicart_btn_area">
-            <a class="common_btn" href="cart_view.html">view cart</a>
-            <a class="common_btn" href="check_out.html">checkout</a>
+            <a class="common_btn" href="{{ route('cart-details') }}">View Cart</a>
+            <a class="common_btn" href="check_out.html">Checkout</a>
         </div>
     </div>
 
