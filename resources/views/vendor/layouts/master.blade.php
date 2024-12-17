@@ -26,7 +26,6 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/venobox.min.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/assets/modules/summernote/summernote-bs4.css') }}">
     <link rel="stylesheet" href="{{ asset('/vendor/flasher/flasher.min.css') }}">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.min.css">
 
 
@@ -167,7 +166,7 @@
                         url: deleteUrl,
 
                         success: function (data) {
-                            if (data.status == 'success') {
+                            if (data.status === 'success') {
                                 Swal.fire({
                                     title: "Deleted!",
                                     text: data.message,
@@ -175,7 +174,7 @@
                                 }).then(() => {
                                     window.location.reload();
                                 });
-                            } else if (data.status == 'error') {
+                            } else if (data.status === 'error') {
                                 Swal.fire({
                                     title: "You can't delete!",
                                     text: data.message,

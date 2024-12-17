@@ -7,6 +7,7 @@
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi"/>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
           rel="stylesheet">
+    <meta name="csrf-token" id="csrf-token" content="{{ csrf_token() }}">
     <title>Sazao || e-Commerce by Laravel 11</title>
 
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
@@ -145,6 +146,7 @@
 {{-- Flasher js --}}
 <script src="{{ asset('/vendor/flasher/flasher.min.js') }}"></script>
 
+
 <!--main/custom js-->
 <script src="{{ asset('frontend/js/main.js') }}"></script>
 
@@ -158,6 +160,8 @@
     @endforeach
     @endif
 </script>
+
+
 
 @stack('scripts')
 
