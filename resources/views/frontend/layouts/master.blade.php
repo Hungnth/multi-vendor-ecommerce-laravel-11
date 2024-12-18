@@ -147,7 +147,8 @@
 <script src="{{ asset('frontend/js/jquery.classycountdown.js') }}"></script>
 {{-- Flasher js --}}
 <script src="{{ asset('/vendor/flasher/flasher.min.js') }}"></script>
-
+{{-- Sweat alert --}}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <!--main/custom js-->
 <script src="{{ asset('frontend/js/main.js') }}"></script>
@@ -162,9 +163,7 @@
     @endforeach
     @endif
 </script>
-
-
-
+@include('frontend.layouts.script')
 @stack('scripts')
 
 </body>

@@ -35,8 +35,9 @@
                     <ul class="wsus__icon_area">
                         <li><a href="wishlist.html"><i class="fal fa-heart"></i><span>05</span></a></li>
                         <li><a href="compare.html"><i class="fal fa-random"></i><span>03</span></a></li>
-                        <li><a class="wsus__cart_icon" href="#"><i
-                                    class="fal fa-shopping-bag"></i><span>04</span></a></li>
+                        <li><a class="wsus__cart_icon" href="javascript:void(0);"><i
+                                    class="fal fa-shopping-bag"></i><span
+                                    id="cart-count">{{ Cart::content()->count() }}</span></a></li>
                     </ul>
                 </div>
             </div>
@@ -45,63 +46,42 @@
 
     <div class="wsus__mini_cart">
         <h4>Shopping Cart <span class="wsus_close_mini_cart"><i class="far fa-times"></i></span></h4>
-        <ul>
-            <li>
-                <div class="wsus__cart_img">
-                    <a href="#"><img src="{{ asset('frontend/images/tab_2.jpg') }}" alt="product" class="img-fluid w-100"></a>
-                    <a class="wsis__del_icon" href="#"><i class="fas fa-minus-circle"></i></a>
-                </div>
-                <div class="wsus__cart_text">
-                    <a class="wsus__cart_title" href="#">apple 9.5" 7 serise tab with full view display</a>
-                    <p>$140 <del>$150</del></p>
-                </div>
-            </li>
-            <li>
-                <div class="wsus__cart_img">
-                    <a href="#"><img src="{{ asset('frontend/images/pro4.jpg') }}" alt="product" class="img-fluid w-100"></a>
-                    <a class="wsis__del_icon" href="#"><i class="fas fa-minus-circle"></i></a>
-                </div>
-                <div class="wsus__cart_text">
-                    <a class="wsus__cart_title" href="#">men's fashion casual watch</a>
-                    <p>$130</p>
-                </div>
-            </li>
-            <li>
-                <div class="wsus__cart_img">
-                    <a href="#"><img src="images/pro2.jpg" alt="product" class="img-fluid w-100"></a>
-                    <a class="wsis__del_icon" href="#"><i class="fas fa-minus-circle"></i></a>
-                </div>
-                <div class="wsus__cart_text">
-                    <a class="wsus__cart_title" href="#">men's casual shoes</a>
-                    <p>$140 <del>$150</del></p>
-                </div>
-            </li>
-            <li>
-                <div class="wsus__cart_img">
-                    <a href="#"><img src="images/pro9.jpg" alt="product" class="img-fluid w-100"></a>
-                    <a class="wsis__del_icon" href="#"><i class="fas fa-minus-circle"></i></a>
-                </div>
-                <div class="wsus__cart_text">
-                    <a class="wsus__cart_title" href="#">men's fashion casual sholder bag</a>
-                    <p>$140</p>
-                </div>
-            </li>
-            <li>
-                <div class="wsus__cart_img">
-                    <a href="#"><img src="images/tab_2.jpg" alt="product" class="img-fluid w-100"></a>
-                    <a class="wsis__del_icon" href="#"><i class="fas fa-minus-circle"></i></a>
-                </div>
-                <div class="wsus__cart_text">
-                    <a class="wsus__cart_title" href="#">apple 9.5" 7 serise tab with full view display</a>
-                    <p>$140 <del>$150</del></p>
-                </div>
-            </li>
+        <ul class="mini_cart_wrapper">
+
+            @foreach(Cart::content() as $sidebarProduct)
+                <li id="mini-cart_{{ $sidebarProduct->rowId }}">
+                    <div class="wsus__cart_img">
+                        <a href="#"><img src="{{ asset($sidebarProduct->options->image) }}"
+                                         alt="{{ $sidebarProduct->name }}" class="img-fluid w-100"></a>
+                        <a class="wsis__del_icon remove-sidebar-product" data-id="{{ $sidebarProduct->rowId }}"
+                           href="javascript:"><i class="fas fa-minus-circle"></i></a>
+                    </div>
+                    <div class="wsus__cart_text">
+                        <a class="wsus__cart_title"
+                           href="{{ route('product-detail', $sidebarProduct->options->slug) }}">{{ $sidebarProduct->name }}</a>
+                        <p>
+                            {{ $settings->currency_icon }}{{ $sidebarProduct->price }}
+                        </p>
+                        <small>Variants total: {{ $settings->currency_icon }}{{ $sidebarProduct->options->variants_total }}</small>
+                        <br>
+                        <small>Qty: {{ $sidebarProduct->qty }}</small>
+                    </div>
+                </li>
+            @endforeach
+
+            @if(Cart::content()->count() === 0)
+                <li class="text-center">Cart Is Empty!</li>
+            @endif
         </ul>
-        <h5>sub total <span>$3540</span></h5>
-        <div class="wsus__minicart_btn_area">
-            <a class="common_btn" href="{{ route('cart-details') }}">View Cart</a>
-            <a class="common_btn" href="check_out.html">Checkout</a>
+
+        <div class="mini_cart_actions {{ Cart::content()->count() === 0 ? 'd-none' : '' }}">
+            <h5>Sub Total <span id="mini_cart_subtotal">{{ $settings->currency_icon }}{{ getCartTotal() }}</span></h5>
+            <div class="wsus__minicart_btn_area">
+                <a class="common_btn" href="{{ route('cart-details') }}">View Cart</a>
+                <a class="common_btn" href="javascript:">Checkout</a>
+            </div>
         </div>
     </div>
 
 </header>
+

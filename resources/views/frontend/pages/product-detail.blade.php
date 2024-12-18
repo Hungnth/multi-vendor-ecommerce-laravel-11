@@ -153,10 +153,10 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <h4>products details</h4>
+                        <h4>Product Details</h4>
                         <ul>
                             <li><a href="#">home</a></li>
-                            <li><a href="#">peoduct</a></li>
+                            <li><a href="#">product</a></li>
                             <li><a href="#">product details</a></li>
                         </ul>
                     </div>
@@ -210,7 +210,12 @@
                     <div class="col-xl-5 col-md-7 col-lg-7">
                         <div class="wsus__pro_details_text">
                             <a class="title" href="javascript:void(0);">{{ $product->name }}</a>
-                            <p class="wsus__stock_area"><span class="in_stock">in stock</span> (167 item)</p>
+                            @if($product->qty > 0)
+                            <p class="wsus__stock_area"><span class="in_stock">in stock</span> ({{ $product->qty }} items)</p>
+                                @elseif ($product->qty === 0)
+                            <p class="wsus__stock_area"><span class="in_stock">Stock Out</span></p>
+
+                            @endif
                             @if(checkDiscount($product))
                                 <h4>{{ $settings->currency_icon }}{{ $product->offer_price }}
                                     <del>{{ $settings->currency_icon }}{{ $product->price }}</del>
@@ -233,16 +238,22 @@
                                     <div class="row">
                                         <input type="hidden" name="product_id" value="{{ $product->id }}">
                                         @foreach($product->variants as $variant)
-                                            <div class="col-xl-6 col-sm-6">
-                                                <h5 class="mb-2">{{ $variant->name }}:</h5>
-                                                <select class="select_2" name="variants_items[]">
-                                                    @foreach($variant->productVariantItems as $variantItem)
-                                                        <option value="{{ $variantItem->id }}" {{ $variantItem->is_default == 1 ? 'selected' : '' }}>{{ $variantItem->name }}
-                                                            ({{ $settings->currency_icon }}{{ $variantItem->price }})
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
+                                            @if($variant->status !== 0)
+                                                <div class="col-xl-6 col-sm-6">
+                                                    <h5 class="mb-2">{{ $variant->name }}:</h5>
+                                                    <select class="select_2" name="variants_items[]">
+                                                        @foreach($variant->productVariantItems as $variantItem)
+                                                            @if($variantItem->status !== 0)
+                                                                <option
+                                                                    value="{{ $variantItem->id }}" {{ $variantItem->is_default == 1 ? 'selected' : '' }}>{{ $variantItem->name }}
+                                                                    ({{ $settings->currency_icon }}{{ $variantItem->price }}
+                                                                    )
+                                                                </option>
+                                                            @endif
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            @endif
                                         @endforeach
                                     </div>
                                 </div>
@@ -257,9 +268,9 @@
 
                                 <ul class="wsus__button_area">
                                     <li>
-                                        <button type="submit" class="add_cart" href="#">Add to Cart</button>
+                                        <button type="submit" class="add_cart">Add to Cart</button>
                                     </li>
-                                    <li><a class="buy_now" href="#">Buy Now</a></li>
+                                    <li><a class="buy_now" href="javascript:void(0);">Buy Now</a></li>
                                     <li><a href="#"><i class="fal fa-heart"></i></a></li>
                                     <li><a href="#"><i class="far fa-random"></i></a></li>
                                 </ul>
@@ -801,32 +812,3 @@
     ==============================-->
 @endsection
 
-@push('scripts')
-    <script>
-        $(document).ready(function () {
-            $.ajaxSetup({
-                headers:
-                    {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-            });
-
-            $('.shopping-cart-form').on('submit', function (e) {
-                e.preventDefault();
-                let formData = $(this).serialize();
-
-                $.ajax({
-                    method: 'POST',
-                    data: formData,
-                    url: " {{ route('add-to-cart') }}",
-                    success: function (data) {
-
-                    },
-                    error: function (data) {
-
-                    }
-                })
-            })
-        })
-    </script>
-@endpush

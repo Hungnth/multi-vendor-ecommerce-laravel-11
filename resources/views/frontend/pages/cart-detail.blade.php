@@ -64,7 +64,7 @@
                                     </th>
 
                                     <th class="wsus__pro_icon">
-                                        <a href="#" class="common_btn">Clear Cart</a>
+                                        <a href="#" class="common_btn clear-cart">Clear Cart</a>
                                     </th>
                                 </tr>
                                 @foreach($cartItems as $item)
@@ -92,8 +92,9 @@
                                         <td class="wsus__pro_select">
                                             <div class="product_qty_wrapper">
                                                 <button class="btn btn-danger product-decrement">-</button>
-                                                <input class="product_qty" data-rowid="{{ $item->rowId }}" type="text" min="1" value="{{ $item->qty }}" readonly/>
-                                                <button class="btn btn-success product-increment"></button>
+                                                <input class="product_qty" data-rowid="{{ $item->rowId }}" type="text"
+                                                       min="1" value="{{ $item->qty }}" readonly/>
+                                                <button class="btn btn-success product-increment">+</button>
                                             </div>
                                         </td>
 
@@ -102,11 +103,19 @@
                                         </td>
 
                                         <td class="wsus__pro_icon">
-                                            <a href="#"><i class="far fa-times"></i></a>
+                                            <a href="{{ route('cart.remove-product', $item->rowId) }}"><i
+                                                    class="far fa-trash-alt"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach
 
+                                @if(count($cartItems) === 0)
+                                    <tr class="d-flex">
+                                        <td class="wsus__pro_icon" style="width: 100%">
+                                            Cart is empty.
+                                        </td>
+                                    </tr>
+                                @endif
                                 </tbody>
                             </table>
                         </div>
@@ -114,19 +123,19 @@
                 </div>
                 <div class="col-xl-3">
                     <div class="wsus__cart_list_footer_button" id="sticky_sidebar">
-                        <h6>total cart</h6>
-                        <p>subtotal: <span>$124.00</span></p>
-                        <p>delivery: <span>$00.00</span></p>
-                        <p>discount: <span>$10.00</span></p>
-                        <p class="total"><span>total:</span> <span>$134.00</span></p>
+                        <h6>Total Cart</h6>
+                        <p>Subtotal: <span id="sub_total">{{ $settings->currency_icon }}{{ getCartTotal() }}</span></p>
+                        <p>Delivery: <span>$00.00</span></p>
+                        <p>Discount: <span>$10.00</span></p>
+                        <p class="total"><span>Total:</span> <span>$134.00</span></p>
 
                         <form>
                             <input type="text" placeholder="Coupon Code">
-                            <button type="submit" class="common_btn">apply</button>
+                            <button type="submit" class="common_btn">Apply</button>
                         </form>
-                        <a class="common_btn mt-4 w-100 text-center" href="check_out.html">checkout</a>
+                        <a class="common_btn mt-4 w-100 text-center" href="check_out.html">Checkout</a>
                         <a class="common_btn mt-1 w-100 text-center" href="product_grid_view.html"><i
-                                class="fab fa-shopify"></i> go shop</a>
+                                class="fab fa-shopify"></i> Go Shop</a>
                     </div>
                 </div>
             </div>
@@ -170,6 +179,7 @@
 @endsection
 
 @push('scripts')
+
     <script>
         $(document).ready(function () {
             $.ajaxSetup({
@@ -179,6 +189,7 @@
                     }
             });
 
+            // Increment product quantity
             $('.product-increment').on('click', function () {
                 let input = $(this).siblings('.product_qty');
                 let quantity = parseInt(input.val()) + 1;
@@ -195,9 +206,14 @@
                     success: function (data) {
                         if (data.status === 'success') {
                             let productId = '#' + rowId;
-                            let totalAmount = "{{ $settings->currency_icon }}" + data.productTotal
-                            $(productId).text(totalAmount)
+                            let totalAmount = "{{ $settings->currency_icon }}" + data.productTotal;
+                            $(productId).text(totalAmount);
+
+                            renderCartSubTotal();
+
                             flasher.success(data.message);
+                        } else if (data.status === 'error') {
+                            flasher.error(data.message);
                         }
                     },
                     error: function (data) {
@@ -209,7 +225,7 @@
             // Decrement product quantity
             $('.product-decrement').on('click', function () {
                 let input = $(this).siblings('.product_qty');
-                let quantity = parseInt(input.val()) -1;
+                let quantity = parseInt(input.val()) - 1;
                 let rowId = input.data('rowid')
 
                 if (quantity < 1) {
@@ -228,9 +244,14 @@
                     success: function (data) {
                         if (data.status === 'success') {
                             let productId = '#' + rowId;
-                            let totalAmount = "{{ $settings->currency_icon }}" + data.productTotal
-                            $(productId).text(totalAmount)
+                            let totalAmount = "{{ $settings->currency_icon }}" + data.productTotal;
+                            $(productId).text(totalAmount);
+
+                            renderCartSubTotal();
+
                             flasher.success(data.message);
+                        } else if (data.status === 'error') {
+                            flasher.error(data.message);
                         }
                     },
                     error: function (data) {
@@ -238,6 +259,50 @@
                     }
                 })
             })
+
+            // Clear cart
+            $('.clear-cart').on('click', function (e) {
+                e.preventDefault();
+
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "This action will clear your cart!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, clear it!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: 'get',
+                            url: "{{ route('clear.cart') }}",
+                            success: function (data) {
+                                if (data.status === 'success') {
+                                    window.location.reload()
+                                }
+                            },
+                            error: function (xhr, status, error) {
+                                console.log(error)
+                            }
+                        })
+                    }
+                });
+            })
+
+            // get subtotal of cart and put it on dom
+            function renderCartSubTotal(){
+                $.ajax({
+                    method: 'GET',
+                    url: " {{ route('cart.sidebar-product-total') }}",
+                    success: function (data) {
+                        $('#sub_total').text("{{ $settings->currency_icon }}" + data)
+                    },
+                    error: function (data) {
+                        console.log(data)
+                    }
+                })
+            }
         })
     </script>
 @endpush
