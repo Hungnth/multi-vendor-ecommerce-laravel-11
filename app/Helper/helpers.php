@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Session;
+
 /**
  * Set Sidebar item active
  */
@@ -57,4 +59,44 @@ function getCartTotal()
     }
 
     return $total;
+}
+
+/**
+ * Get payable total amount
+ */
+function getMainCartTotal()
+{
+    if (Session::has('coupon')) {
+        $coupon = Session::get('coupon');
+        $subTotal = getCartTotal();
+        if ($coupon['discount_type'] === 'amount') {
+            $total = $subTotal - $coupon['discount'];
+            return $total;
+        } elseif ($coupon['discount_type'] === 'percent') {
+            $discount = ($subTotal * $coupon['discount'] / 100);
+            $total = $subTotal - $discount;
+            return $total;
+        }
+    } else {
+        return getCartTotal();
+    }
+}
+
+/**
+ * Get cart discount
+ */
+function getCartDiscount()
+{
+    if (Session::has('coupon')) {
+        $coupon = Session::get('coupon');
+        $subTotal = getCartTotal();
+        if ($coupon['discount_type'] === 'amount') {
+            return $coupon['discount'];
+        } elseif ($coupon['discount_type'] === 'percent') {
+            $discount = ($subTotal * $coupon['discount'] / 100);
+            return $discount;
+        }
+    } else {
+        return 0;
+    }
 }

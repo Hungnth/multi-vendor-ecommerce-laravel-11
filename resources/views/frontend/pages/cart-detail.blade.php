@@ -125,17 +125,15 @@
                     <div class="wsus__cart_list_footer_button" id="sticky_sidebar">
                         <h6>Total Cart</h6>
                         <p>Subtotal: <span id="sub_total">{{ $settings->currency_icon }}{{ getCartTotal() }}</span></p>
-                        <p>Delivery: <span>$00.00</span></p>
-                        <p>Discount: <span>$10.00</span></p>
-                        <p class="total"><span>Total:</span> <span>$134.00</span></p>
+                        <p>Coupon(-): <span id="discount">{{ $settings->currency_icon }}{{ getCartDiscount() }}</span></p>
+                        <p class="total"><span>Total:</span> <span id="cart_total">{{ $settings->currency_icon }}{{ getMainCartTotal() }}</span></p>
 
-                        <form>
-                            <input type="text" placeholder="Coupon Code">
+                        <form id="coupon_form">
+                            <input type="text" placeholder="Coupon Code" name="coupon_code" value="{{ session()->has('coupon') ? session()->get('coupon')['coupon_code'] : '' }}">
                             <button type="submit" class="common_btn">Apply</button>
                         </form>
                         <a class="common_btn mt-4 w-100 text-center" href="check_out.html">Checkout</a>
-                        <a class="common_btn mt-1 w-100 text-center" href="product_grid_view.html"><i
-                                class="fab fa-shopify"></i> Go Shop</a>
+                        <a class="common_btn mt-1 w-100 text-center" href="{{ route('home') }}"><i class="far fa-store"></i> Keep Shopping</a>
                     </div>
                 </div>
             </div>
@@ -210,6 +208,7 @@
                             $(productId).text(totalAmount);
 
                             renderCartSubTotal();
+                            calculateCouponDiscount();
 
                             flasher.success(data.message);
                         } else if (data.status === 'error') {
@@ -248,6 +247,7 @@
                             $(productId).text(totalAmount);
 
                             renderCartSubTotal();
+                            calculateCouponDiscount();
 
                             flasher.success(data.message);
                         } else if (data.status === 'error') {
@@ -291,7 +291,7 @@
             })
 
             // get subtotal of cart and put it on dom
-            function renderCartSubTotal(){
+            function renderCartSubTotal() {
                 $.ajax({
                     method: 'GET',
                     url: " {{ route('cart.sidebar-product-total') }}",
@@ -304,6 +304,48 @@
                 })
             }
         })
+
+        // Apply coupon on cart
+        $('#coupon_form').on('submit', function (e) {
+            e.preventDefault()
+            let formData = $(this).serialize();
+
+            $.ajax({
+                method: 'GET',
+                url: " {{ route('apply-coupon') }}",
+                data: formData,
+                success: function (data) {
+                    if (data.status === 'error') {
+                        flasher.error(data.message);
+                    } else if (data.status === 'success') {
+                        calculateCouponDiscount();
+                        flasher.success(data.message);
+                    }
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            })
+        })
+
+        // Calculate discount amount
+        function calculateCouponDiscount() {
+            $.ajax({
+                method: 'GET',
+                url: " {{ route('coupon-calculation') }}",
+                success: function (data) {
+                    if(data.status === 'success') {
+                        $('#discount').text("{{ $settings->currency_icon }}" + data.discount)
+                        $('#cart_total').text("{{ $settings->currency_icon }}" + data.cart_total)
+                    }
+
+                },
+                error: function (data) {
+                    console.log(data)
+                }
+            })
+        }
+
     </script>
 @endpush
 
