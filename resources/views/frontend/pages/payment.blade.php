@@ -49,11 +49,11 @@
                                 <button class="nav-link common_btn active" id="v-pills-home-tab" data-bs-toggle="pill"
                                         data-bs-target="#v-pills-paypal" type="button" role="tab"
                                         aria-controls="v-pills-paypal"
-                                        aria-selected="true">Paypal
+                                        aria-selected="true"><i class="fab fa-paypal"></i> Paypal
                                 </button>
                                 <button class="nav-link common_btn" id="v-pills-profile-tab" data-bs-toggle="pill"
                                         data-bs-target="#v-pills-stripe" type="button" role="tab"
-                                        aria-controls="v-pills-stripe" aria-selected="false">Stripe
+                                        aria-controls="v-pills-stripe" aria-selected="false"><i class="fab fa-stripe-s"></i> Stripe
                                 </button>
 
                             </div>
@@ -113,7 +113,7 @@
                                 <div class="row">
                                     <div class="col-xl-12 m-auto">
                                         <div class="wsus__payment_area">
-                                            <button class="nav-link common_btn"><i class="fab fa-paypal"></i> Pay with Paypal</button>
+                                            <a class="nav-link common_btn text-center" href="{{ route('user.paypal.payment') }}"><i class="fab fa-paypal"></i> Pay with Paypal</a>
                                         </div>
                                     </div>
                                 </div>
