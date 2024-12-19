@@ -132,7 +132,7 @@
                             <input type="text" placeholder="Coupon Code" name="coupon_code" value="{{ session()->has('coupon') ? session()->get('coupon')['coupon_code'] : '' }}">
                             <button type="submit" class="common_btn">Apply</button>
                         </form>
-                        <a class="common_btn mt-4 w-100 text-center" href="check_out.html">Checkout</a>
+                        <a class="common_btn mt-4 w-100 text-center" href="{{ route('user.checkout') }}">Checkout</a>
                         <a class="common_btn mt-1 w-100 text-center" href="{{ route('home') }}"><i class="far fa-store"></i> Keep Shopping</a>
                     </div>
                 </div>
