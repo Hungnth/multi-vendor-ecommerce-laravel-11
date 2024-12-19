@@ -100,3 +100,23 @@ function getCartDiscount()
         return 0;
     }
 }
+
+/**
+ * Get selected shipping fee from session
+ */
+
+function getShippingFee() {
+    if (Session::has('shipping_method')) {
+        return Session::get('shipping_method')['cost'];
+    } else {
+        return 0;
+    }
+}
+
+/**
+ * Get payable amount
+ */
+
+function getFinalPayableAmount() {
+    return getMainCartTotal() + getShippingFee();
+}

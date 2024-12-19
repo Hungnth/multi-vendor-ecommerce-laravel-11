@@ -93,6 +93,10 @@
                         <a class="nav-link" href="{{ route('admin.vendor-profile.index') }}">Vendor Profile</a>
                     </li>
 
+                    <li class="{{ setActive(['admin.vendor-profile.*']) }}">
+                        <a class="nav-link" href="{{ route('admin.vendor-profile.index') }}">Vendor Profile</a>
+                    </li>
+
                 </ul>
             </li>
 

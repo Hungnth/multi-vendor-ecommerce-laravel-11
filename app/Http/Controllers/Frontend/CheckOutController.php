@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Backend;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\ShippingRule;
@@ -72,6 +72,6 @@ class CheckOutController extends Controller
             Session::put('address', $address);
         }
 
-        return response()->json(['status' => 'success']);
+        return response()->json(['status' => 'success', 'redirect_url' => route('user.payment')]);
     }
 }

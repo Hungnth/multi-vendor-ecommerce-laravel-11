@@ -106,7 +106,8 @@
                         </div>
                         <div class="terms_area">
                             <div class="form-check">
-                                <input class="form-check-input agree_term" type="checkbox" value="" id="flexCheckChecked3">
+                                <input class="form-check-input agree_term" type="checkbox" value=""
+                                       id="flexCheckChecked3">
                                 <label class="form-check-label" for="flexCheckChecked3">
                                     I have read and agree to the website <a href="#">Terms and Conditions *</a>
                                 </label>
@@ -255,7 +256,6 @@
                     flasher.error('Shipping address is required!');
                 } else if (!$('.agree_term').prop('checked')) {
                     flasher.error('You have to agree website terms and conditions!');
-
                 } else {
                     $.ajax({
                         url: "{{ route('user.checkout.form-submit') }}",
@@ -267,6 +267,8 @@
                         success: function (data) {
                             if (data.status === 'success') {
                                 $('#submitCheckoutForm').html('Place Order')
+                                // redirect user to next page
+                                window.location.href = data.redirect_url;
                             }
                         },
                         error: function (data) {
