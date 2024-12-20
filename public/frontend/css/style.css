@@ -9491,3 +9491,7 @@ a:not([href]):not([class]):hover {
 .exzoom .exzoom_preview {
     z-index: 1070;
 }
+
+#card-element {
+    padding: 18px;
+}

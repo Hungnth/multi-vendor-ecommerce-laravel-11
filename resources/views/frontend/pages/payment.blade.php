@@ -53,7 +53,14 @@
                                 </button>
                                 <button class="nav-link common_btn" id="v-pills-profile-tab" data-bs-toggle="pill"
                                         data-bs-target="#v-pills-stripe" type="button" role="tab"
-                                        aria-controls="v-pills-stripe" aria-selected="false"><i class="fab fa-stripe-s"></i> Stripe
+                                        aria-controls="v-pills-stripe" aria-selected="false"><i
+                                        class="fab fa-stripe-s"></i> Stripe
+                                </button>
+
+                                <button class="nav-link common_btn" id="v-pills-razorpay-tab" data-bs-toggle="pill"
+                                        data-bs-target="#v-pills-razorpay" type="button" role="tab"
+                                        aria-controls="v-pills-razorpay" aria-selected="false"><i
+                                        class="fas fa-file-invoice-dollar"></i> RazorPay
                                 </button>
 
                             </div>
@@ -113,22 +120,17 @@
                                 <div class="row">
                                     <div class="col-xl-12 m-auto">
                                         <div class="wsus__payment_area">
-                                            <a class="nav-link common_btn text-center" href="{{ route('user.paypal.payment') }}"><i class="fab fa-paypal"></i> Pay with Paypal</a>
+                                            <a class="nav-link common_btn text-center"
+                                               href="{{ route('user.paypal.payment') }}"><i class="fab fa-paypal"></i>
+                                                Pay with Paypal</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="tab-pane fade show" id="v-pills-stripe" role="tabpanel"
-                                 aria-labelledby="v-pills-home-tab">
-                                <div class="row">
-                                    <div class="col-xl-12 m-auto">
-                                        <div class="wsus__payment_area">
-                                            <button class="nav-link common_btn"><i class="fab fa-stripe-s"></i> Pay with Stripe</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            @include('frontend.pages.payment-gateway.stripe')
+
+                            @include('frontend.pages.payment-gateway.razorpay')
 
                         </div>
                     </div>
