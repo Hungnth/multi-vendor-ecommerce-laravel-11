@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Models\Order;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -12,7 +13,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class OrderDataTable extends DataTable
+class VendorOrderDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -23,10 +24,9 @@ class OrderDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($query) {
-                $showBtn = "<a href='" . route('admin.orders.show', $query->id) . "' class='btn btn-primary mr-2'><i class='fas fa-eye'></i></a>";
-                $deleteBtn = "<a href='" . route('admin.orders.destroy', $query->id) . "' class='btn btn-danger mr-2 delete-item'><i class='fas fa-trash'></i></a>";
+                $showBtn = "<a href='" . route('vendor.orders.show', $query->id) . "' class='btn btn-primary'><i class='fas fa-eye'></i></a>";
 
-                return $showBtn . $deleteBtn;
+                return $showBtn;
             })
             ->addColumn('customer', function ($query) {
                 return $query->user->name;
@@ -45,18 +45,18 @@ class OrderDataTable extends DataTable
                     $badge = 'warning';
                     $payment_status = 'Pending';
                 }
-                return "<span class='badge badge-$badge text-white'>$payment_status</span>";
+                return "<span class='badge bg-$badge text-white'>$payment_status</span>";
             })
             ->addColumn('order_status', function ($query) {
                 return match ($query->order_status) {
-                    'pending' => '<span class="badge badge-warning">Pending</span>',
-                    'processed_and_ready_to_ship' => '<span class="badge badge-info">Processed</span>',
-                    'dropped_off' => '<span class="badge badge-info">Dropped Off</span>',
-                    'shipped' => '<span class="badge badge-info">Shipped</span>',
-                    'out_for_delivery' => '<span class="badge badge-primary">Out for delivery</span>',
-                    'delivered' => '<span class="badge badge-success">Delivered</span>',
-                    'canceled' => '<span class="badge badge-danger">Canceled</span>',
-                    default => '<span class="badge badge-dark">None</span>',
+                    'pending' => '<span class="badge bg-warning">Pending</span>',
+                    'processed_and_ready_to_ship' => '<span class="badge bg-info">Processed</span>',
+                    'dropped_off' => '<span class="badge bg-info">Dropped Off</span>',
+                    'shipped' => '<span class="badge bg-info">Shipped</span>',
+                    'out_for_delivery' => '<span class="badge bg-primary">Out for delivery</span>',
+                    'delivered' => '<span class="badge bg-success">Delivered</span>',
+                    'canceled' => '<span class="badge bg-danger">Canceled</span>',
+                    default => '<span class="badge bg-dark">None</span>',
                 };
             })
             ->rawColumns(['action', 'customer', 'date', 'order_status', 'payment_status'])
@@ -69,6 +69,9 @@ class OrderDataTable extends DataTable
     public function query(Order $model): QueryBuilder
     {
         return $model
+            ->whereHas('orderProducts', function ($query) {
+                $query->where('vendor_id', Auth::user()->vendor->id);
+            })
             ->newQuery();
     }
 
@@ -78,20 +81,20 @@ class OrderDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('order-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    //->dom('Bfrtip')
-                    ->orderBy(0)
-                    ->selectStyleSingle()
-                    ->buttons([
-                        // Button::make('excel'),
-                        // Button::make('csv'),
-                        // Button::make('pdf'),
-                        // Button::make('print'),
-                        // Button::make('reset'),
-                        // Button::make('reload')
-                    ]);
+            ->setTableId('vendororder-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            //->dom('Bfrtip')
+            ->orderBy(0)
+            ->selectStyleSingle()
+            ->buttons([
+                Button::make('excel'),
+                Button::make('csv'),
+                Button::make('pdf'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload'),
+            ]);
     }
 
     /**
@@ -122,6 +125,6 @@ class OrderDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Order_' . date('YmdHis');
+        return 'VendorOrder_' . date('YmdHis');
     }
 }

@@ -34,7 +34,7 @@ return [
 
     'order_status_vendor' => [
         'pending' => [
-            'status' => 'pending',
+            'status' => 'Pending',
             'details' => ' Your order is currently pending.',
         ],
         'processed_and_ready_to_ship' => [
