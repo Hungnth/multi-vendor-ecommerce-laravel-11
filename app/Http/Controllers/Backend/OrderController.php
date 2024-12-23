@@ -2,7 +2,14 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\DataTables\CanceledOrderDataTable;
+use App\DataTables\DeliveredOrderDataTable;
+use App\DataTables\DroppedOffOrderDataTable;
 use App\DataTables\OrderDataTable;
+use App\DataTables\OutForDeliveryOrderDataTable;
+use App\DataTables\PendingOrderDataTable;
+use App\DataTables\ProcessedOrderDataTable;
+use App\DataTables\ShippedOrderDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
@@ -17,20 +24,39 @@ class OrderController extends Controller
         return $dataTable->render('admin.order.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function pendingOrders(PendingOrderDataTable $dataTable)
     {
-        //
+        return $dataTable->render('admin.order.pending-order');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function processedOrders(ProcessedOrderDataTable $dataTable)
     {
-        //
+        return $dataTable->render('admin.order.processed-order');
+    }
+
+    public function droppedOffOrders(DroppedOffOrderDataTable $dataTable)
+    {
+        return $dataTable->render('admin.order.dropped-off-order');
+    }
+
+    public function shippedOrders(ShippedOrderDataTable $dataTable)
+    {
+        return $dataTable->render('admin.order.shipped-order');
+    }
+
+    public function outForDeliveryOrders(OutForDeliveryOrderDataTable $dataTable)
+    {
+        return $dataTable->render('admin.order.out-for-delivery-order');
+    }
+
+    public function deliveredOrders(DeliveredOrderDataTable $dataTable)
+    {
+        return $dataTable->render('admin.order.delivered-order');
+    }
+
+    public function canceledOrders(CanceledOrderDataTable $dataTable)
+    {
+        return $dataTable->render('admin.order.canceled-order');
     }
 
     /**

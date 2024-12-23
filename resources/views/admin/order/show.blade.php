@@ -115,7 +115,7 @@
                                         <div class="form-group">
                                             <label for="">Payment Status</label>
                                             <select id="payment_status" name="payment_status"
-                                                    data-id="{{ $order->payment_status }}" class="form-control">
+                                                    data-id="{{ $order->id }}" class="form-control">
                                                 <option {{ $order->payment_status === 0 ? 'selected' : '' }} value="0">
                                                     Pending
                                                 </option>
