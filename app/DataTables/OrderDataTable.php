@@ -24,7 +24,7 @@ class OrderDataTable extends DataTable
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($query) {
                 $showBtn = "<a href='" . route('admin.orders.show', $query->id) . "' class='btn btn-primary mr-2'><i class='fas fa-eye'></i></a>";
-                $deleteBtn = "<a href='" . route('admin.products.destroy', $query->id) . "' class='btn btn-danger mr-2 delete-item'><i class='fas fa-trash'></i></a>";
+                $deleteBtn = "<a href='" . route('admin.orders.destroy', $query->id) . "' class='btn btn-danger mr-2 delete-item'><i class='fas fa-trash'></i></a>";
 
                 return $showBtn . $deleteBtn;
             })
