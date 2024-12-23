@@ -59,8 +59,6 @@ class OrderDataTable extends DataTable
                     'canceled' => '<span class="badge badge-danger">Canceled</span>',
                     default => '<span class="badge badge-dark">None</span>',
                 };
-
-                return "<span class='badge bg-warning text-white'>$query->order_status</span>";
             })
             ->rawColumns(['action', 'customer', 'date', 'order_status', 'payment_status'])
             ->setRowId('id');

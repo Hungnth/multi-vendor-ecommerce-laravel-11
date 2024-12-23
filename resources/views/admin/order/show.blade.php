@@ -113,8 +113,21 @@
                                 <div class="col-lg-8">
                                     <div class="col-md-4">
                                         <div class="form-group">
+                                            <label for="">Payment Status</label>
+                                            <select id="payment_status" name="payment_status"
+                                                    data-id="{{ $order->payment_status }}" class="form-control">
+                                                <option {{ $order->payment_status === 0 ? 'selected' : '' }} value="0">
+                                                    Pending
+                                                </option>
+                                                <option {{ $order->payment_status === 1 ? 'selected' : '' }} value="1">
+                                                    Completed
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
                                             <label for="">Order Status</label>
-                                            <select name="order_status" id="order_status" data-id="{{ $order->id }}"
+                                            <select id="order_status" name="order_status" data-id="{{ $order->id }}"
                                                     class="form-control">
                                                 @foreach(config('order_status.order_status_admin') as $key => $orderStatus)
                                                     <option
@@ -170,13 +183,6 @@
 @push('scripts')
     <script>
         $(document).ready(function () {
-            $.ajaxSetup({
-                headers:
-                    {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-            });
-
             $('#order_status').on('change', function () {
                 let status = $(this).val();
                 let id = $(this).data('id');
@@ -184,6 +190,31 @@
                 $.ajax({
                     method: 'GET',
                     url: "{{ route('admin.order.status') }}",
+                    data: {
+                        status: status,
+                        id: id
+                    },
+                    success: function (data) {
+                        if (data.status === 'success') {
+                            flasher.success(data.message);
+                        }
+                    },
+                    error: function (data) {
+                        console.log(data)
+                    }
+
+                })
+
+            })
+
+            // Change payment status
+            $('#payment_status').on('change', function () {
+                let status = $(this).val();
+                let id = $(this).data('id');
+
+                $.ajax({
+                    method: 'GET',
+                    url: "{{ route('admin.payment.status') }}",
                     data: {
                         status: status,
                         id: id
